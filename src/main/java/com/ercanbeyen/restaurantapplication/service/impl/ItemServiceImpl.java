@@ -1,6 +1,7 @@
 package com.ercanbeyen.restaurantapplication.service.impl;
 
 
+import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import com.ercanbeyen.restaurantapplication.model.Item;
 import com.ercanbeyen.restaurantapplication.repository.ItemRepository;
 import com.ercanbeyen.restaurantapplication.service.ItemService;
@@ -17,5 +18,15 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item createItem(Item request) {
         return itemRepository.save(request);
+    }
+
+    @Override
+    public Item getItem(Long id) {
+        return findById(id);
+    }
+
+    private Item findById(Long id) {
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Item is not found"));
     }
 }
