@@ -28,6 +28,19 @@ public class ItemController {
         return "redirect:/success";
     }
 
+    @GetMapping("/updateItemForm/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+        Item item = itemService.getItem(id);
+        model.addAttribute("item", item);
+        return "update-item";
+    }
+
+    @PostMapping("updateItem/{id}")
+    public String updateItem(@PathVariable("id") Long id, Item item) {
+        itemService.updateItem(id, item);
+        return "redirect:/success";
+    }
+
     @GetMapping("/getItem/{id}")
     public String getItem(@PathVariable("id") Long id, Model model) {
         Item item = itemService.getItem(id);
