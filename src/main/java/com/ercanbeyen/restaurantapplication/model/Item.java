@@ -13,5 +13,5 @@ public class Item {
     private String name;
     @Enumerated(value = EnumType.STRING)
     private ItemCategory category;
-    private Long price;
+    private Double price;
 }

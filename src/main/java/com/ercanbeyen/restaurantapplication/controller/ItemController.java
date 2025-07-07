@@ -48,6 +48,13 @@ public class ItemController {
         return "get-item";
     }
 
+    @GetMapping("/deleteItem/{id}")
+    public String deleteItem(@PathVariable("id") Long id, Model model) {
+        itemService.deleteItem(id);
+        model.addAttribute("id", id);
+        return "delete-item";
+    }
+
     @GetMapping("/success")
     public String showSuccessPage() {
         return "success";
