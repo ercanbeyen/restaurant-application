@@ -3,13 +3,21 @@
     <head>
         <meta charset="UTF-8">
         <title>Get Items Page</title>
+        <link rel="stylesheet" th:href="@{/css/get-items.css}">
     </head>
     <body>
-        <h1>Items</h1>
-        <div>
-            <ul th:each="item : ${items}">
-                <li th:text="'Name: ' + ${item.name} + ', Category: ' + ${item.category} + ', Price: ' + ${item.price}"></li>
-            </ul>
-        </div>
+        <h2>Items</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+            </tr>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.category}"></td>
+                <td th:text="${item.price}"></td>
+            </tr>
+        </table>
     </body>
 </html>
