@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -37,6 +39,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item getItem(Long id) {
         return findById(id);
+    }
+
+    @Override
+    public List<Item> getItems() {
+        return itemRepository.findAll();
     }
 
     @Override

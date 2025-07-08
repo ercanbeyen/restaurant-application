@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -48,11 +50,18 @@ public class ItemController {
         return "get-item";
     }
 
+    @GetMapping("/getItems")
+    public String getItems(Model model) {
+        List<Item> items = itemService.getItems();
+        model.addAttribute("items", items);
+        return "get-items";
+    }
+
     @GetMapping("/deleteItem/{id}")
     public String deleteItem(@PathVariable("id") Long id, Model model) {
         itemService.deleteItem(id);
         model.addAttribute("id", id);
-        return "delete-item";
+        return "success";
     }
 
     @GetMapping("/success")
