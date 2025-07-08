@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>Welcome Page</title>
     </head>
     <body>
-        <h1>Welcome to the Restaurant Application!</h1>
+        <h1>Welcome to the Restaurant!</h1>
+        <p>Restaurant is open from 8 am to 10 pm</p>
+        <a th:href="@{/getItems}">
+            <button type="button">Go to menu</button>
+        </a>
     </body>
 </html>

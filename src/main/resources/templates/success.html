@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>Success Page</title>
     </head>
     <body>
         <p>Operation is successfully completed!</p>
+        <a th:href="@{/getItems}">Go to menu</a>
     </body>
 </html>
