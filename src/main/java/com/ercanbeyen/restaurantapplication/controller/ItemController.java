@@ -2,10 +2,12 @@ package com.ercanbeyen.restaurantapplication.controller;
 
 import com.ercanbeyen.restaurantapplication.model.Item;
 import com.ercanbeyen.restaurantapplication.service.ItemService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,13 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute("item") Item item) {
+    public String createItem(@Valid @ModelAttribute("item") Item item, BindingResult bindingResult) {
+        boolean hasErrors = bindingResult.hasErrors();
+
+        if (hasErrors) {
+            return "create-item";
+        }
+
         itemService.createItem(item);
         return "redirect:/success";
     }
@@ -38,7 +46,13 @@ public class ItemController {
     }
 
     @PostMapping("updateItem/{id}")
-    public String updateItem(@PathVariable("id") Long id, Item item) {
+    public String updateItem(@PathVariable("id") Long id, @Valid Item item, BindingResult bindingResult) {
+        boolean hasErrors = bindingResult.hasErrors();
+
+        if (hasErrors) {
+            return "update-item";
+        }
+
         itemService.updateItem(id, item);
         return "redirect:/success";
     }
