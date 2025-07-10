@@ -1,13 +1,13 @@
 package com.ercanbeyen.restaurantapplication.service;
 
-import com.ercanbeyen.restaurantapplication.model.Item;
+import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 
 import java.util.List;
 
 public interface ItemService {
-    void createItem(Item request);
-    void updateItem(Long id, Item request);
-    Item getItem(Long id);
-    List<Item> getItems();
+    void createItem(ItemDto request);
+    void updateItem(Long id, ItemDto request);
+    ItemDto getItem(Long id);
+    List<ItemDto> getItems();
     void deleteItem(Long id);
 }

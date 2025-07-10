@@ -1,5 +1,6 @@
 package com.ercanbeyen.restaurantapplication.controller;
 
+import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 import com.ercanbeyen.restaurantapplication.model.Item;
 import com.ercanbeyen.restaurantapplication.service.ItemService;
 import jakarta.validation.Valid;
@@ -27,47 +28,43 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public String createItem(@Valid @ModelAttribute("item") Item item, BindingResult bindingResult) {
-        boolean hasErrors = bindingResult.hasErrors();
-
-        if (hasErrors) {
+    public String createItem(@Valid @ModelAttribute("item") ItemDto request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "create-item";
         }
 
-        itemService.createItem(item);
+        itemService.createItem(request);
         return "redirect:/success";
     }
 
     @GetMapping("/updateItemForm/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        Item item = itemService.getItem(id);
-        model.addAttribute("item", item);
+        ItemDto request = itemService.getItem(id);
+        model.addAttribute("item", request);
         return "update-item";
     }
 
     @PostMapping("updateItem/{id}")
-    public String updateItem(@PathVariable("id") Long id, @Valid Item item, BindingResult bindingResult) {
-        boolean hasErrors = bindingResult.hasErrors();
-
-        if (hasErrors) {
+    public String updateItem(@PathVariable("id") Long id, @Valid @ModelAttribute("item") ItemDto request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "update-item";
         }
 
-        itemService.updateItem(id, item);
+        itemService.updateItem(id, request);
         return "redirect:/success";
     }
 
     @GetMapping("/getItem/{id}")
     public String getItem(@PathVariable("id") Long id, Model model) {
-        Item item = itemService.getItem(id);
-        model.addAttribute("item", item);
+        ItemDto itemDto = itemService.getItem(id);
+        model.addAttribute("item", itemDto);
         return "get-item";
     }
 
     @GetMapping("/getItems")
     public String getItems(Model model) {
-        List<Item> items = itemService.getItems();
-        model.addAttribute("items", items);
+        List<ItemDto> itemDtos = itemService.getItems();
+        model.addAttribute("items", itemDtos);
         return "get-items";
     }
 
