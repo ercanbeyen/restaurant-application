@@ -7,17 +7,17 @@
     </head>
     <body>
         <form th:action="@{/createItem}" th:object="${item}" method="post">
-            <label for="name">Name</label>
+            <label for="name">Name:</label>
             <input type="text" th:field="*{name}" id="name" placeholder="Name" />
-            <p th:if="${#fields.hasErrors('name')}" th:class="${#fields.hasErrors('name')} ? itemError" th:errors="*{name}"></p>
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
             <br/>
-            <label for="category">Category</label>
+            <label for="category">Category:</label>
             <input type="text" th:field="*{category}" id="category" placeholder="Category" />
-            <p th:if="${#fields.hasErrors('category')}" th:class="${#fields.hasErrors('category')} ? itemError" th:errors="*{category}"></p>
+            <p th:if="${#fields.hasErrors('category')}" th:errorclass="error" th:errors="*{category}"></p>
             <br/>
-            <label for="price">Price</label>
+            <label for="price">Price:</label>
             <input type="text" th:field="*{price}" id="price" placeholder="Price" />
-            <p th:if="${#fields.hasErrors('price')}" th:class="${#fields.hasErrors('price')} ? itemError" th:errors="*{price}"></p>
+            <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"></p>
             <br/>
             <button type="submit">Create Item</button>
         </form>

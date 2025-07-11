@@ -1,28 +1,34 @@
 package com.ercanbeyen.restaurantapplication.advice;
 
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
-    public String handleNotFoundException(Exception exception, Model model) {
-        return directToErrorPage(HttpStatus.NOT_FOUND, exception.getMessage(), model);
+    public ModelAndView handleNotFoundException(Exception exception, HttpServletRequest request) {
+        return directToErrorPage(HttpStatus.NOT_FOUND, exception, request.getRequestURL().toString());
     }
 
     @ExceptionHandler(Exception.class)
-    public String handleGlobalExceptions(Exception exception, Model model) {
-        return directToErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), model);
+    public ModelAndView handleError(Exception exception, HttpServletRequest request) {
+        return directToErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, exception, request.getRequestURL().toString());
     }
 
-    private String directToErrorPage(HttpStatus httpStatus, String message, Model model) {
-        model.addAttribute("statusCode", httpStatus.value());
-        model.addAttribute("message", message);
-        return "error";
+    private ModelAndView directToErrorPage(HttpStatus httpStatus, Exception exception, String requestedUrl) {
+        log.error("Request: {} raised {}", requestedUrl, exception.toString());
+
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("statusCode", httpStatus.value());
+        modelAndView.addObject("message", exception.getMessage());
+        modelAndView.addObject("url", requestedUrl);
+
+        return modelAndView;
     }
 }
