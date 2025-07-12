@@ -1,6 +1,7 @@
 package com.ercanbeyen.restaurantapplication.service.impl;
 
 
+import com.ercanbeyen.restaurantapplication.constant.enums.ItemCategory;
 import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import com.ercanbeyen.restaurantapplication.mapper.ItemMapper;
@@ -32,7 +33,7 @@ public class ItemServiceImpl implements ItemService {
         Item item = findById(id);
 
         item.setName(request.name());
-        item.setCategory(request.category());
+        item.setCategory(ItemCategory.valueOf(request.category()));
         item.setPrice(request.price());
 
         itemRepository.save(item);
