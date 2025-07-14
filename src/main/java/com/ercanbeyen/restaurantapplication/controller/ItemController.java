@@ -76,15 +76,4 @@ public class ItemController {
     String showSuccessPage() {
         return "success";
     }
-
-    /*@GetMapping("/favicon.ico")
-    @ResponseBody
-    void returnFavicon() { // Disable favicon
-        log.warn("No favicon");
-    }*/
-
-    @GetMapping("/favicon.ico")
-    String returnFavicon() {
-        return "forward:/favicon.ico";
-    }
 }
