@@ -10,9 +10,10 @@ import com.ercanbeyen.restaurantapplication.repository.ItemRepository;
 import com.ercanbeyen.restaurantapplication.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,11 +48,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> getItems() {
-        return itemRepository.findAll()
-                .stream()
-                .map(itemMapper::entityToDto)
-                .toList();
+    public Page<ItemDto> getItems(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
+        return itemRepository.findAll(pageable)
+                .map(itemMapper::entityToDto);
     }
 
     @Override

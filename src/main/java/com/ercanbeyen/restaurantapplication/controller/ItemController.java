@@ -6,6 +6,7 @@ import com.ercanbeyen.restaurantapplication.service.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -59,9 +60,19 @@ public class ItemController {
     }
 
     @GetMapping("/getItems")
-    public String getItems(Model model) {
-        List<ItemDto> itemDtos = itemService.getItems();
-        model.addAttribute("items", itemDtos);
+    public String getItems(
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNumber,
+            Model model) {
+        final int pageSize = 5;
+        Page<ItemDto> page = itemService.getItems(pageNumber, pageSize);
+        List<ItemDto> content = page.getContent();
+
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("items", content);
+
         return "get-items";
     }
 
