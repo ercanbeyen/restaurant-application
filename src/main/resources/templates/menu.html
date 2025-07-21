@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Menu Page</title>
+        <link th:href="@{/css/menu.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="menu-container">
+            <h2>Categories</h2>
+            <div>
+                <a th:href="@{/getItems?category=SALAD}">
+                    <button type="button" class="menu-button">Salads</button>
+                </a>
+            </div>
+            <div>
+                <a th:href="@{/getItems?category=APPETIZER}">
+                    <button type="button" class="menu-button">Appetizers</button>
+                </a>
+            </div>
+            <div>
+                <a th:href="@{/getItems?category=BEVERAGE}">
+                    <button type="button" class="menu-button">Beverages</button>
+                </a>
+            </div>
+            <div>
+                <a th:href="@{/getItems?category=DESSERT}">
+                    <button type="button" class="menu-button">Desserts</button>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

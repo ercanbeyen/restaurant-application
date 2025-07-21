@@ -1,11 +1,9 @@
-h2 {
+.menu-container {
     text-align: center;
 }
 
 .menu-button {
     color: white;
-    background-color: blue;
+    background-color: red;
     margin-top: 1%;
-    margin-right: 1%
-    float: right;
 }

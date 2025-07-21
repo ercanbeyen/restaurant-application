@@ -62,15 +62,16 @@ public class ItemController {
     @GetMapping("/getItems")
     public String getItems(
             @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNumber,
+            @RequestParam(value = "category") String itemCategory,
             Model model) {
         final int pageSize = 5;
-        Page<ItemDto> page = itemService.getItems(pageNumber, pageSize);
+        Page<ItemDto> page = itemService.getItems(itemCategory, pageNumber, pageSize);
         List<ItemDto> content = page.getContent();
 
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
+        model.addAttribute("category", itemCategory);
         model.addAttribute("items", content);
 
         return "get-items";
@@ -81,6 +82,11 @@ public class ItemController {
         itemService.deleteItem(id);
         model.addAttribute("id", id);
         return "success";
+    }
+
+    @GetMapping("/menu")
+    String showMenuPage() {
+        return "menu";
     }
 
     @GetMapping("/success")

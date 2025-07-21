@@ -48,10 +48,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<ItemDto> getItems(int pageNumber, int pageSize) {
+    public Page<ItemDto> getItems(String itemCategory, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        ItemCategory category = Enum.valueOf(ItemCategory.class, itemCategory);
 
-        return itemRepository.findAll(pageable)
+        return itemRepository.findAllByCategory(category, pageable)
                 .map(itemMapper::entityToDto);
     }
 

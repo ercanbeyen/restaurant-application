@@ -7,6 +7,6 @@ public interface ItemService {
     void createItem(ItemDto request);
     void updateItem(Long id, ItemDto request);
     ItemDto getItem(Long id);
-    Page<ItemDto> getItems(int pageNumber, int pageSize);
+    Page<ItemDto> getItems(String category, int pageNumber, int pageSize);
     void deleteItem(Long id);
 }
