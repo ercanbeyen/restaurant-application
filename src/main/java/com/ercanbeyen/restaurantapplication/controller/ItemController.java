@@ -62,13 +62,14 @@ public class ItemController {
     @GetMapping("/getItems")
     public String getItems(
             @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
             @RequestParam(value = "category") String itemCategory,
             Model model) {
-        final int pageSize = 5;
         Page<ItemDto> page = itemService.getItems(itemCategory, pageNumber, pageSize);
         List<ItemDto> content = page.getContent();
 
         model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("category", itemCategory);

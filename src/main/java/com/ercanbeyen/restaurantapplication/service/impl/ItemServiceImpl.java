@@ -52,7 +52,7 @@ public class ItemServiceImpl implements ItemService {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
         ItemCategory category = Enum.valueOf(ItemCategory.class, itemCategory);
 
-        return itemRepository.findAllByCategory(category, pageable)
+        return itemRepository.findByCategory(category, pageable)
                 .map(itemMapper::entityToDto);
     }
 
