@@ -14,6 +14,7 @@ Models:
 ### Requirements
 - Item must have name, category and price.
 - Name length must be between 3 and 30 characters.
+- Customer can browse and sort items on the pages by filtering them according to categories.
 
 ### Tech Stack
 ---
@@ -22,7 +23,9 @@ Models:
 - CSS
 - Spring Boot
 - Spring MVC
+- Spring Data JPA
 - Thymeleaf
+- Bootstrap 5
 - MYSQL
 
 ### Prerequisites
