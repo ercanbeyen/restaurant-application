@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -67,6 +69,15 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.delete(item);
 
         log.info("Item {} is successfully deleted", id);
+    }
+
+    @Override
+    public List<ItemDto> searchItems(String name) {
+        return itemRepository.findAll()
+                .stream()
+                .filter(item -> item.getName().toLowerCase().startsWith(name.toLowerCase()))
+                .map(itemMapper::entityToDto)
+                .toList();
     }
 
     private Item findById(Long id) {

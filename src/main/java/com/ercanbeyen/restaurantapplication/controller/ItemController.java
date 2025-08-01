@@ -6,6 +6,7 @@ import com.ercanbeyen.restaurantapplication.service.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -95,6 +96,18 @@ public class ItemController {
         itemService.deleteItem(id);
         model.addAttribute("id", id);
         return "success";
+    }
+
+    @GetMapping("/search")
+    public String searchItem(@RequestParam(value = "name", required = false) String name, Model model) {
+        if (StringUtils.isBlank(name)) {
+            log.warn("No name is entered to search");
+        } else {
+            List<ItemDto> items = itemService.searchItems(name);
+            model.addAttribute("items", items);
+        }
+
+        return "search-items";
     }
 
     @GetMapping("/menu")
