@@ -3,13 +3,31 @@
 }
 
 .menu-button {
+    color: black
+    background-color: white;
+    border: 2px solid red;
+    margin-top: 1%;
+    transition-duration: 0.4s;
+}
+
+.menu-button:hover {
     color: white;
     background-color: red;
+    border-radius: 8px;
     margin-top: 1%;
 }
 
 .search-button {
+    color: black
+    background-color: white;
+    border: 2px solid green;
+    margin-top: 1%;
+    transition-duration: 0.4s;
+}
+
+.search-button:hover {
     color: white;
     background-color: green;
+    border-radius: 8px;
     margin-top: 1%;
 }
