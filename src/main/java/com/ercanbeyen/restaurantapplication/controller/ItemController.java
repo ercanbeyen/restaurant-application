@@ -99,7 +99,7 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public String searchItem(@RequestParam(value = "name", required = false) String name, Model model) {
+    public String searchItems(@RequestParam(value = "name", required = false) String name, Model model) {
         if (StringUtils.isBlank(name)) {
             log.warn("No name is entered to search");
         } else {
