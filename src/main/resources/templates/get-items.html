@@ -9,6 +9,7 @@
     </head>
     <body>
         <h2>Items</h2>
+        <a th:href="@{/showCreateItemForm}" class="btn btn-secondary">Create Item</a>
         <div>
             <table class="table table-striped">
                 <thead>
@@ -28,6 +29,7 @@
                                 Price
                             </a>
                         </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +37,10 @@
                         <td th:text="${item.name}"></td>
                         <td th:text="${item.category}"></td>
                         <td th:text="${item.price}"></td>
+                        <td>
+                            <a th:href="@{/showUpdateItemForm/{id}(id=${item.id})}" class="btn btn-primary">Update</a>
+                            <a th:href="@{/deleteItem/{id}(id=${item.id})}" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

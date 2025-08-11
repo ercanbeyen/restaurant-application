@@ -22,7 +22,7 @@ import java.util.List;
 public class ItemController {
     private final ItemService itemService;
 
-    @GetMapping("/createItemForm")
+    @GetMapping("/showCreateItemForm")
     public String showCreateItemForm(Item item) {
         return "create-item";
     }
@@ -37,7 +37,7 @@ public class ItemController {
         return "redirect:/success";
     }
 
-    @GetMapping("/updateItemForm/{id}")
+    @GetMapping("/showUpdateItemForm/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         ItemDto request = itemService.getItem(id);
         model.addAttribute("item", request);
