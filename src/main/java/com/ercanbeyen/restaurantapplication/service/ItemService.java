@@ -10,6 +10,6 @@ public interface ItemService {
     void updateItem(Long id, ItemDto request);
     ItemDto getItem(Long id);
     Page<ItemDto> getItems(String category, String sortField, String sortDirection, int pageNumber, int pageSize);
-    void deleteItem(Long id);
+    String deleteItem(Long id);
     List<ItemDto> searchItems(String name);
 }

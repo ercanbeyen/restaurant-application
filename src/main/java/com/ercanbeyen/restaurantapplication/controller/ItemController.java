@@ -34,7 +34,7 @@ public class ItemController {
         }
 
         itemService.createItem(request);
-        return "redirect:/success";
+        return callGetItems(request.category());
     }
 
     @GetMapping("/showUpdateItemForm/{id}")
@@ -51,7 +51,7 @@ public class ItemController {
         }
 
         itemService.updateItem(id, request);
-        return "redirect:/success";
+        return callGetItems(request.category());
     }
 
     @GetMapping("/getItem/{id}")
@@ -64,8 +64,8 @@ public class ItemController {
     @GetMapping("/getItems")
     public String getItems(
             @RequestParam(value = "category") String itemCategory,
-            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
             @RequestParam(value = "sortField", defaultValue = "name", required = false) String sortField,
             @RequestParam(value = "sortDir", defaultValue = "asc") String sortDirection,
             Model model) {
@@ -93,9 +93,9 @@ public class ItemController {
 
     @GetMapping("/deleteItem/{id}")
     public String deleteItem(@PathVariable("id") Long id, Model model) {
-        itemService.deleteItem(id);
+        String category = itemService.deleteItem(id);
         model.addAttribute("id", id);
-        return "success";
+        return callGetItems(category);
     }
 
     @GetMapping("/search")
@@ -115,8 +115,7 @@ public class ItemController {
         return "menu";
     }
 
-    @GetMapping("/success")
-    String showSuccessPage() {
-        return "success";
+    private String callGetItems(String category) {
+        return String.format("redirect:/getItems?category=%s&pageNo=%d&pageSize=%d&sortField=%s&sortDir=%s", category, 1, 5, "name", "asc");
     }
 }

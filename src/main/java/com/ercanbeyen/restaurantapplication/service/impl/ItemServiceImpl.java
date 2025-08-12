@@ -64,11 +64,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void deleteItem(Long id) {
+    public String deleteItem(Long id) {
         Item item = findById(id);
+        String category = String.valueOf(item.getCategory());
         itemRepository.delete(item);
 
         log.info("Item {} is successfully deleted", id);
+        return category;
     }
 
     @Override
