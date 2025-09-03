@@ -12,4 +12,5 @@ public interface ItemService {
     Page<ItemDto> getItems(String category, String sortField, String sortDirection, int pageNumber, int pageSize);
     String deleteItem(Long id);
     List<ItemDto> searchItems(String name);
+    ItemDto getItemByName(String name);
 }

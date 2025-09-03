@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Create Bill Page</title>
+    </head>
+    <body>
+        <form th:action="@{/createBill}" th:object="${bill}" method="post">
+            <label for="tableNumber">Table Number:</label>
+            <input type="text" th:field="*{tableNumber}" id="tableNumber" placeholder="Table Number" />
+            <p th:if="${#fields.hasErrors('tableNumber')}" th:errorclass="error" th:errors="*{tableNumber}"></p>
+            <br/>
+            <button type="submit">Create Bill</button>
+        </form>
+    </body>
+</html>

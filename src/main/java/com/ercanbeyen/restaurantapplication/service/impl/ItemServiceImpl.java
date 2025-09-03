@@ -81,6 +81,13 @@ public class ItemServiceImpl implements ItemService {
                 .toList();
     }
 
+    @Override
+    public ItemDto getItemByName(String name) {
+        Item item = itemRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Item is not found"));
+        return itemMapper.entityToDto(item);
+    }
+
     private Item findById(Long id) {
         return itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Item is not found"));

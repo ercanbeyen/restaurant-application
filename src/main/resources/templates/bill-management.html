@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Bill Management Page</title>
+    </head>
+    <body>
+        <h2>Bill Management</h2>
+        <div>
+            <a th:href="@{/showCreateBillForm}">
+                <button type="button">Create Bill</button>
+            </a>
+        </div>
+        <h2>Bills</h2>
+        <div>
+            <ul>
+                <li th:each="bill : ${bills}">
+                    <a th:href="@{/getBill/tables/{tableNumber}(tableNumber=${bill.tableNumber})}" th:text="'Table Number: ' + ${bill.tableNumber}"></a>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

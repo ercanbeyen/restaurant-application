@@ -10,7 +10,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length = 30)
+    @Column(unique = true, nullable = false, length = 30)
     private String name;
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)

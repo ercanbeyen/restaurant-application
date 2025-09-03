@@ -1,5 +1,6 @@
 package com.ercanbeyen.restaurantapplication.advice;
 
+import com.ercanbeyen.restaurantapplication.exception.AlreadyExistsException;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFoundException(Exception exception, HttpServletRequest request) {
         return directToErrorPage(HttpStatus.NOT_FOUND, exception, request.getRequestURL().toString());
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ModelAndView handleConflictExceptions(Exception exception, HttpServletRequest request) {
+        return directToErrorPage(HttpStatus.CONFLICT, exception, request.getRequestURL().toString());
     }
 
     @ExceptionHandler(Exception.class)
