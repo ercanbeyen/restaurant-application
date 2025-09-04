@@ -59,11 +59,6 @@ public class BillController {
         return "get-bill";
     }
 
-    /*@GetMapping("/getBills")
-    public String getBills(Model model) {
-        return
-    }*/
-
     @PostMapping("/addOrder/tables/{tableNumber}")
     public String addOrder(@PathVariable("tableNumber") Integer tableNumber, Order order) {
         BillDto response = billService.addOrder(tableNumber, order);

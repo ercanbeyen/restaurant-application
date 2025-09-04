@@ -14,5 +14,12 @@ public class Bill {
     @Column(unique = true, nullable = false)
     private Integer tableNumber;
     @ElementCollection
+    @CollectionTable(
+            name = "bill_orders",
+            joinColumns = @JoinColumn(
+                    name = "table_number",
+                    referencedColumnName = "tableNumber"
+            )
+    )
     private List<Order> orders;
 }
