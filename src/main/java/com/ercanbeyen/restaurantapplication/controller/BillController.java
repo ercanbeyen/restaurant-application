@@ -59,6 +59,12 @@ public class BillController {
         return "get-bill";
     }
 
+    @GetMapping("/deleteBill/tables/{tableNumber}")
+    public String deleteBill(@PathVariable("tableNumber") Integer tableNumber) {
+        billService.deleteBill(tableNumber);
+        return "redirect:/bill-management";
+    }
+
     @PostMapping("/addOrder/tables/{tableNumber}")
     public String addOrder(@PathVariable("tableNumber") Integer tableNumber, Order order) {
         BillDto response = billService.addOrder(tableNumber, order);

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface BillRepository extends JpaRepository<Bill, String> {
     Optional<Bill> findByTableNumber(Integer tableNumber);
+    void deleteByTableNumber(Integer tableNumber);
 }

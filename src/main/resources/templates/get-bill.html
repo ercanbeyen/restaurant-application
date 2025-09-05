@@ -9,6 +9,7 @@
     <body>
         <p>Table Number: <span th:text="${bill.tableNumber}"></span></p>
         <a th:href="@{|/showAddOrderForm/tables/${bill.tableNumber}|}" class="btn btn-secondary">Add Order</a>
+        <a th:href="@{|/deleteBill/tables/${bill.tableNumber}|}" class="btn btn-danger">Delete Bill</a>
         <h2>Orders</h2>
         <div>
             <table class="table table-striped">

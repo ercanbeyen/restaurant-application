@@ -8,7 +8,6 @@ import com.ercanbeyen.restaurantapplication.model.Bill;
 import com.ercanbeyen.restaurantapplication.model.Order;
 import com.ercanbeyen.restaurantapplication.repository.BillRepository;
 import com.ercanbeyen.restaurantapplication.service.BillService;
-import com.ercanbeyen.restaurantapplication.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import java.util.List;
 public class BillServiceImpl implements BillService {
     private final BillRepository billRepository;
     private final BillMapper billMapper;
-    private final ItemService itemService;
 
     @Override
     public BillDto createBill(BillDto request) {
@@ -51,6 +49,20 @@ public class BillServiceImpl implements BillService {
                 .sorted(Comparator.comparing(Bill::getTableNumber))
                 .map(billMapper::entityToDto)
                 .toList();
+    }
+
+    @Transactional
+    @Override
+    public void deleteBill(Integer tableNumber) {
+        billRepository.findByTableNumber(tableNumber)
+                .ifPresentOrElse(
+                        bill -> billRepository.deleteByTableNumber(tableNumber)
+                        , () -> {
+                            log.error("Bill with table number {} is not found", tableNumber);
+                            throw new NotFoundException("Bill is not found");
+                        });
+
+        log.info("Bill with table number {} is successfully deleted", tableNumber);
     }
 
     @Transactional
