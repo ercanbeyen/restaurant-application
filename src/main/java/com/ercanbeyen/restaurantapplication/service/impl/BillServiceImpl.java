@@ -1,6 +1,7 @@
 package com.ercanbeyen.restaurantapplication.service.impl;
 
 import com.ercanbeyen.restaurantapplication.dto.BillDto;
+import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 import com.ercanbeyen.restaurantapplication.exception.AlreadyExistsException;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import com.ercanbeyen.restaurantapplication.mapper.BillMapper;
@@ -8,6 +9,7 @@ import com.ercanbeyen.restaurantapplication.model.Bill;
 import com.ercanbeyen.restaurantapplication.model.Order;
 import com.ercanbeyen.restaurantapplication.repository.BillRepository;
 import com.ercanbeyen.restaurantapplication.service.BillService;
+import com.ercanbeyen.restaurantapplication.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.List;
 public class BillServiceImpl implements BillService {
     private final BillRepository billRepository;
     private final BillMapper billMapper;
+    private final ItemService itemService;
 
     @Override
     public BillDto createBill(BillDto request) {
@@ -114,7 +117,19 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Bill findByTableNumber(Integer tableNumber) {
+    public Double calculateSum(BillDto request) {
+        double sum = 0;
+
+        for (Order order : request.orders()) {
+            ItemDto itemDto = itemService.getItemByName(order.getItemName());
+            double cost = order.getAmount() * itemDto.price();
+            sum += cost;
+        }
+
+        return sum;
+    }
+
+    private Bill findByTableNumber(Integer tableNumber) {
         return billRepository.findByTableNumber(tableNumber)
                 .orElseThrow(() -> new NotFoundException("Bill is not found"));
     }

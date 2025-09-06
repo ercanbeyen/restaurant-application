@@ -56,6 +56,10 @@ public class BillController {
     public String getBill(@PathVariable("tableNumber") Integer tableNumber, Model model) {
         BillDto response = billService.getBill(tableNumber);
         model.addAttribute("bill", response);
+
+        Double sum = billService.calculateSum(response);
+        model.addAttribute("sum", sum);
+
         return "get-bill";
     }
 
