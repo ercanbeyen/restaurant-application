@@ -1,0 +1,33 @@
+h2 {
+    text-align: center;
+}
+
+.createBill-button {
+    color: black
+    background-color: white;
+    border: 2px solid green;
+    margin-top: 1%;
+    transition-duration: 0.4s;
+}
+
+.createBill-button:hover {
+    color: white;
+    background-color: green;
+    border-radius: 8px;
+    margin-top: 1%;
+}
+
+.welcome-button {
+    color: blue
+    background-color: white;
+    border: 2px solid blue;
+    margin-top: 1%;
+    transition-duration: 0.4s;
+}
+
+.welcome-button:hover {
+    color: white;
+    background-color: blue;
+    border-radius: 8px;
+    margin-top: 1%;
+}

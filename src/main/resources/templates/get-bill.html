@@ -9,8 +9,6 @@
     </head>
     <body>
         <p>Table Number: <span th:text="${bill.tableNumber}"></span></p>
-        <a th:href="@{|/showAddOrderForm/tables/${bill.tableNumber}|}" class="btn btn-secondary">Add Order</a>
-        <a th:href="@{|/deleteBill/tables/${bill.tableNumber}|}" class="btn btn-danger">Delete Bill</a>
         <h2>Orders</h2>
         <div>
             <table class="table table-bordered">
@@ -26,8 +24,8 @@
                         <td th:text="${order.itemName}"></td>
                         <td th:text="${order.amount}"></td>
                         <td>
-                            <a th:href="@{|/showUpdateOrderForm/tables/${bill.tableNumber}/orders/${order.itemName}|}" class="btn btn-primary">Update</a>
-                            <a th:href="@{|/deleteOrder/tables/${bill.tableNumber}/orders/${order.itemName}|}" class="btn btn-danger">Delete</a>
+                            <a th:href="@{|/showUpdateOrderForm/tables/${bill.tableNumber}/orders/${order.itemName}|}" class="btn btn-primary">Update Order</a>
+                            <a th:href="@{|/deleteOrder/tables/${bill.tableNumber}/orders/${order.itemName}|}" class="btn btn-danger">Delete Order</a>
                         </td>
                     </tr>
                 </tbody>
@@ -35,6 +33,10 @@
                     <tr>
                         <td>Sum</td>
                         <td><span th:text="${sum}"></span></td>
+                        <td>
+                            <a th:href="@{|/showAddOrderForm/tables/${bill.tableNumber}|}" class="btn btn-primary">Add Order</a>
+                            <a th:href="@{|/deleteBill/tables/${bill.tableNumber}|}" class="btn btn-danger">Delete Bill</a>
+                        </td>
                     </tr>
                 </tfoot>
             </table>

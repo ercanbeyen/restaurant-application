@@ -3,15 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>Bill Management Page</title>
+        <link th:href="@{/css/bill-management.css}" rel="stylesheet" />
     </head>
     <body>
         <h2>Bill Management</h2>
-        <div>
-            <a th:href="@{/showCreateBillForm}">
-                <button type="button">Create Bill</button>
-            </a>
-        </div>
-        <h2>Bills</h2>
+        <a th:href="@{/showCreateBillForm}">
+            <button type="button" class="createBill-button">Create Bill</button>
+        </a> &nbsp;
+        <a th:href="@{/}">
+            <button type="button" class="welcome-button">Go to welcome</button>
+        </a>
+        <h3>Bills</h3>
         <div>
             <ul>
                 <li th:each="bill : ${bills}">
