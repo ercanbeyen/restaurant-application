@@ -3,10 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>Get Item Page</title>
+        <link th:href="@{/css/get-item.css}" rel="stylesheet" />
     </head>
     <body>
-        <p>Name: <span th:text="${item.name}"></span></p>
-        <p>Category: <span th:text="${item.category}"></span></p>
-        <p>Price: <span th:text="${item.price}"></span></p>
+        <div class="getItem-container">
+            <h2>Item</h2>
+            <p><b>Name: </b><i><span th:text="${item.name}"></span></i></p>
+            <p><b>Category: </b><i><span th:text="${item.category}"></span></i></p>
+            <p><b>Price: </b><i><span th:text="${item.price}"></span></i></p>
+            <a th:href="@{/menu}">
+                <button type="button" class="menu-button">Go to menu</button>
+            </a>
+        </div>
     </body>
 </html>
