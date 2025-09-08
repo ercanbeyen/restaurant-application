@@ -110,6 +110,13 @@ public class ItemController {
         return "search-items";
     }
 
+    @GetMapping("/getItemByName/{name}")
+    public String getItemByName(@PathVariable("name") String name, Model model) {
+        ItemDto itemDto = itemService.getItemByName(name);
+        model.addAttribute("item", itemDto);
+        return "get-item";
+    }
+
     @GetMapping("/menu")
     String showMenuPage() {
         return "menu";

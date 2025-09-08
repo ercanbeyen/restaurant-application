@@ -38,8 +38,9 @@
                         <td th:text="${item.category}"></td>
                         <td th:text="${item.price}"></td>
                         <td>
-                            <a th:href="@{/showUpdateItemForm/{id}(id=${item.id})}" class="btn btn-primary">Update</a>
-                            <a th:href="@{/deleteItem/{id}(id=${item.id})}" class="btn btn-danger">Delete</a>
+                            <a th:href="@{/showUpdateItemForm/{id}(id=${item.id})}" class="btn btn-primary">Update Item</a>
+                            <a th:href="@{/deleteItem/{id}(id=${item.id})}" class="btn btn-danger">Delete Item</a>
+                            <a th:href="@{/getItemByName/{name}(name=${item.name})}" class="btn btn-secondary">View Item</a>
                         </td>
                     </tr>
                 </tbody>
