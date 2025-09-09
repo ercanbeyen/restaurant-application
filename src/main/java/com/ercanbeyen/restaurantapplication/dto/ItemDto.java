@@ -3,10 +3,9 @@ package com.ercanbeyen.restaurantapplication.dto;
 import com.ercanbeyen.restaurantapplication.constant.enums.ItemCategory;
 import com.ercanbeyen.restaurantapplication.constant.message.ErrorMessage;
 import com.ercanbeyen.restaurantapplication.validation.ValidEnum;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+
+import java.util.List;
 
 public record ItemDto(
         Long id,
@@ -17,6 +16,8 @@ public record ItemDto(
         String category,
         @NotNull(message = ErrorMessage.FIELD_REQUIRED)
         @Min(value = 0, message = "Minimum price should be {value}")
-        Double price) {
+        Double price,
+        @NotEmpty(message = ErrorMessage.FIELD_REQUIRED)
+        List<@NotBlank String> ingredients) {
 
 }

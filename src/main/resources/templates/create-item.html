@@ -19,6 +19,10 @@
             <input type="text" th:field="*{price}" id="price" placeholder="Price" />
             <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"></p>
             <br/>
+            <label for="ingredients">Ingredients:</label>
+            <input type="text" th:field="*{ingredients}" id="ingredients" placeholder="Ingredients" />
+            <p th:if="${#fields.hasErrors('ingredients')}" th:errorclass="error" th:errors="*{ingredients}"></p>
+            <br/>
             <button type="submit">Create Item</button>
         </form>
     </body>

@@ -4,6 +4,8 @@ import com.ercanbeyen.restaurantapplication.constant.enums.ItemCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Item {
@@ -17,4 +19,6 @@ public class Item {
     private ItemCategory category;
     @Column(nullable = false)
     private Double price;
+    @Column(nullable = false)
+    private List<String> ingredients;
 }

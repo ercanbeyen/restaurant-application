@@ -39,6 +39,7 @@ public class ItemServiceImpl implements ItemService {
         item.setName(request.name());
         item.setCategory(ItemCategory.valueOf(request.category()));
         item.setPrice(request.price());
+        item.setIngredients(request.ingredients());
 
         itemRepository.save(item);
 
