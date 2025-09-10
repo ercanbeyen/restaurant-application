@@ -3,27 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <title>Update Item Page</title>
-        <link th:href="@{/css/error.css}" rel="stylesheet" />
+        <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
-        <form th:action="@{|/updateItem/${item.id}|}" th:object="${item}" method="post">
-            <label for="name">Name:</label>
-            <input type="text" th:field="*{name}" id="name" placeholder="Name" />
-            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
-            <br/>
-            <label for="category">Category:</label>
-            <input type="text" th:field="*{category}" id="category" placeholder="Category" />
-            <p th:if="${#fields.hasErrors('category')}" th:errorclass="error" th:errors="*{category}"></p>
-            <br/>
-            <label for="price">Price:</label>
-            <input type="text" th:field="*{price}" id="price" placeholder="Price" />
-            <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"></p>
-            <br/>
-            <label for="ingredients">Ingredients:</label>
-            <input type="text" th:field="*{ingredients}" id="ingredients" placeholder="Ingredients" />
-            <p th:if="${#fields.hasErrors('ingredients')}" th:errorclass="error" th:errors="*{ingredients}"></p>
-            <br/>
-            <button type="submit">Update Item</button>
-        </form>
+        <div class="itemForm-container">
+            <h2>Item</h2>
+            <form th:action="@{|/updateItem/${item.id}|}" th:object="${item}" method="post">
+                <label for="name"><b>Name:</b></label>
+                <input type="text" th:field="*{name}" id="name" placeholder="Name" />
+                <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+                <br/>
+                <label for="category"><b>Category:</b></label>
+                <input type="text" th:field="*{category}" id="category" placeholder="Category" />
+                <p th:if="${#fields.hasErrors('category')}" th:errorclass="error" th:errors="*{category}"></p>
+                <br/>
+                <label for="price"><b>Price:</b></label>
+                <input type="text" th:field="*{price}" id="price" placeholder="Price" />
+                <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"></p>
+                <br/>
+                <label for="ingredients"><b>Ingredients:</b></label>
+                <input type="text" th:field="*{ingredients}" id="ingredients" placeholder="Ingredients" />
+                <p th:if="${#fields.hasErrors('ingredients')}" th:errorclass="error" th:errors="*{ingredients}"></p>
+                <br/>
+                <button type="submit" class="sendForm-button">Update Item</button>
+            </form>
+            <div>
+                <a th:href="@{/menu}">
+                    <button type="button" class="menu-button">Go to menu</button>
+                </a>
+            </div>
+        </div>
     </body>
 </html>

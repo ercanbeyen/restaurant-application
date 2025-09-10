@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Update Order Page</title>
-        <link th:href="@{/css/error.css}" rel="stylesheet" />
+        <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
         <form th:action="@{|/updateOrder/tables/${tableNumber}/orders/${order.itemName}|}" th:object="${order}" method="post">

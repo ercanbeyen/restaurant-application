@@ -3,11 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Create Item Page</title>
-        <link th:href="@{/css/create-item.css}" rel="stylesheet" />
-        <link th:href="@{/css/error.css}" rel="stylesheet" />
+        <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
-        <div class="createItem-container">
+        <div class="itemForm-container">
             <h2>Item</h2>
             <form th:action="@{/createItem}" th:object="${item}" method="post">
                 <label for="name"><b>Name:</b></label>
@@ -26,7 +25,7 @@
                 <input type="text" th:field="*{ingredients}" id="ingredients" placeholder="Ingredients" />
                 <p th:if="${#fields.hasErrors('ingredients')}" th:errorclass="error" th:errors="*{ingredients}"></p>
                 <br/>
-                <button type="submit" class="createItem-button">Create Item</button>
+                <button type="submit" class="itemForm-container">Create Item</button>
             </form>
             <div>
                 <a th:href="@{/menu}">
