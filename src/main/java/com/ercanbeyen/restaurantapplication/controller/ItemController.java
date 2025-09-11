@@ -1,5 +1,6 @@
 package com.ercanbeyen.restaurantapplication.controller;
 
+import com.ercanbeyen.restaurantapplication.constant.enums.ItemCategory;
 import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 import com.ercanbeyen.restaurantapplication.model.Item;
 import com.ercanbeyen.restaurantapplication.service.ItemService;
@@ -23,7 +24,9 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping("/showCreateItemForm")
-    public String showCreateItemForm(Item item) {
+    public String showCreateItemForm(Item item, Model model) {
+        List<ItemCategory> categories = List.of(ItemCategory.values());
+        model.addAttribute("categories", categories);
         return "create-item";
     }
 
@@ -40,7 +43,11 @@ public class ItemController {
     @GetMapping("/showUpdateItemForm/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         ItemDto request = itemService.getItem(id);
+        List<ItemCategory> categories = List.of(ItemCategory.values());
+
+        model.addAttribute("categories", categories);
         model.addAttribute("item", request);
+
         return "update-item";
     }
 

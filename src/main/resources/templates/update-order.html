@@ -14,7 +14,7 @@
             <input type="text" th:field="*{amount}" id="amount" placeholder="Amount" />
             <p th:if="${#fields.hasErrors('amount')}" th:errorclass="error" th:errors="*{amount}"></p>
             <br/>
-            <button type="submit">Update Order</button>
+            <button type="submit" class="sendForm-button">Update Order</button>
         </form>
     </body>
 </html>
