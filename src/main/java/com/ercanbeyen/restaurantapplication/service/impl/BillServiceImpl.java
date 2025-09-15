@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,22 +28,22 @@ public class BillServiceImpl implements BillService {
     private final ItemService itemService;
 
     @Override
-    public BillDto createBill(BillDto request) {
+    public BillDto openBill(BillDto request) {
         boolean isTableFilled = billRepository.findByTableNumber(request.tableNumber())
                 .isPresent();
 
         if (isTableFilled) {
-            throw new AlreadyExistsException("Bill has already been created for the table");
+            throw new AlreadyExistsException("Bill has already been opened for the table");
         }
 
         Bill bill = billMapper.dtoToEntity(request);
+        bill.setOpenDate(LocalDateTime.now());
         return billMapper.entityToDto(billRepository.save(bill));
     }
 
     @Override
     public BillDto getBill(Integer tableNumber) {
-        Bill bill = findByTableNumber(tableNumber);
-        return billMapper.entityToDto(bill);
+        return billMapper.entityToDto(findByTableNumber(tableNumber));
     }
 
     @Override
@@ -56,7 +57,7 @@ public class BillServiceImpl implements BillService {
 
     @Transactional
     @Override
-    public void deleteBill(Integer tableNumber) {
+    public void closeBill(Integer tableNumber) {
         billRepository.findByTableNumber(tableNumber)
                 .ifPresentOrElse(
                         bill -> billRepository.deleteByTableNumber(tableNumber)
@@ -65,7 +66,7 @@ public class BillServiceImpl implements BillService {
                             throw new NotFoundException("Bill is not found");
                         });
 
-        log.info("Bill with table number {} is successfully deleted", tableNumber);
+        log.info("Bill with table number {} is successfully closed", tableNumber);
     }
 
     @Transactional

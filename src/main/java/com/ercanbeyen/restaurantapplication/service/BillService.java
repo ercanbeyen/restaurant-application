@@ -6,10 +6,10 @@ import com.ercanbeyen.restaurantapplication.model.Order;
 import java.util.List;
 
 public interface BillService {
-    BillDto createBill(BillDto request);
+    BillDto openBill(BillDto request);
     BillDto getBill(Integer tableNumber);
     List<BillDto> getBills();
-    void deleteBill(Integer tableNumber);
+    void closeBill(Integer tableNumber);
     BillDto addOrder(Integer tableNumber, Order order);
     BillDto updateOrder(Integer tableNumber, Order order);
     BillDto deleteOrder(Integer tableNumber, String itemName);

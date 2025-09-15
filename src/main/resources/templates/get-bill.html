@@ -8,7 +8,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <p>Table Number: <span th:text="${bill.tableNumber}"></span></p>
+        <p><b>Table Number: </b><span th:text="${bill.tableNumber}"></span></p>
+        <p><b>Opening Date: </b><span th:text="${{bill.openDate}}"></span></p>
         <h2>Orders</h2>
         <div>
             <table class="table table-bordered">
@@ -35,7 +36,7 @@
                         <td><span th:text="${sum}"></span></td>
                         <td>
                             <a th:href="@{|/showAddOrderForm/tables/${bill.tableNumber}|}" class="btn btn-primary">Add Order</a>
-                            <a th:href="@{|/deleteBill/tables/${bill.tableNumber}|}" class="btn btn-danger">Delete Bill</a>
+                            <a th:href="@{|/closeBill/tables/${bill.tableNumber}|}" class="btn btn-danger">Close Bill</a>
                         </td>
                     </tr>
                 </tfoot>

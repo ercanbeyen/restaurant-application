@@ -6,12 +6,12 @@
         <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
-        <form th:action="@{/createBill}" th:object="${bill}" method="post">
+        <form th:action="@{/openBill}" th:object="${bill}" method="post">
             <label for="tableNumber"><b>Table Number:</b></label>
             <input type="text" th:field="*{tableNumber}" id="tableNumber" placeholder="Table Number" />
             <p th:if="${#fields.hasErrors('tableNumber')}" th:errorclass="error" th:errors="*{tableNumber}"></p>
             <br/>
-            <button type="submit" class="sendForm-button">Create Bill</button>
+            <button type="submit" class="sendForm-button">Open Bill</button>
         </form>
         <div>
             <a th:href="@{/bill-management}">

@@ -20,9 +20,9 @@ import java.util.List;
 public class BillController {
     private final BillService billService;
 
-    @GetMapping("/showCreateBillForm")
-    public String showCreateBillForm(Bill bill) {
-        return "create-bill";
+    @GetMapping("/showOpenBillForm")
+    public String showOpenBillForm(Bill bill) {
+        return "open-bill";
     }
 
     @GetMapping("/showAddOrderForm/tables/{tableNumber}")
@@ -42,13 +42,13 @@ public class BillController {
         return "update-order";
     }
 
-    @PostMapping("/createBill")
-    public String createBill(@Valid @ModelAttribute("bill") BillDto request, BindingResult bindingResult) {
+    @PostMapping("/openBill")
+    public String openBill(@Valid @ModelAttribute("bill") BillDto request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "create-bill";
+            return "open-bill";
         }
 
-        BillDto response = billService.createBill(request);
+        BillDto response = billService.openBill(request);
         return callGetBill(response.tableNumber());
     }
 
@@ -63,9 +63,9 @@ public class BillController {
         return "get-bill";
     }
 
-    @GetMapping("/deleteBill/tables/{tableNumber}")
-    public String deleteBill(@PathVariable("tableNumber") Integer tableNumber) {
-        billService.deleteBill(tableNumber);
+    @GetMapping("/closeBill/tables/{tableNumber}")
+    public String closeBill(@PathVariable("tableNumber") Integer tableNumber) {
+        billService.closeBill(tableNumber);
         return "redirect:/bill-management";
     }
 

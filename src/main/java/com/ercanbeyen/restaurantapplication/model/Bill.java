@@ -3,6 +3,7 @@ package com.ercanbeyen.restaurantapplication.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,6 +14,7 @@ public class Bill {
     private String id;
     @Column(unique = true, nullable = false)
     private Integer tableNumber;
+    private LocalDateTime openDate;
     @ElementCollection
     @CollectionTable(
             name = "bill_orders",
