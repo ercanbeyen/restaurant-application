@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Update Employee Page</title>
+        <link th:href="@{/css/main.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="centerAligned-container">
+            <h2>Item</h2>
+            <form th:action="@{|/updateEmployee/${employee.id}|}" th:object="${employee}" method="post">
+                <label for="fullName"><b>Full Name:</b></label>
+                <input type="text" th:field="*{fullName}" id="fullName" placeholder="Full Name" />
+                <p th:if="${#fields.hasErrors('fullName')}" th:errorclass="error" th:errors="*{fullName}"></p>
+                <br/>
+                <button type="submit" class="sendForm-button">Update Employee</button>
+            </form>
+            <div>
+                <a th:href="@{/employee-management}">
+                    <button type="button" class="employeeManagement-button">Go to employee management</button>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

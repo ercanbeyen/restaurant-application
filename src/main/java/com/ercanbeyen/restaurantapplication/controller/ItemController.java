@@ -125,7 +125,7 @@ public class ItemController {
     }
 
     @GetMapping("/menu")
-    String showMenuPage() {
+    public String showMenuPage() {
         return "menu";
     }
 
