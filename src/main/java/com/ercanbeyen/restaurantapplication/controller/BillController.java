@@ -1,9 +1,11 @@
 package com.ercanbeyen.restaurantapplication.controller;
 
 import com.ercanbeyen.restaurantapplication.dto.BillDto;
+import com.ercanbeyen.restaurantapplication.dto.EmployeeDto;
 import com.ercanbeyen.restaurantapplication.model.Bill;
 import com.ercanbeyen.restaurantapplication.model.Order;
 import com.ercanbeyen.restaurantapplication.service.BillService;
+import com.ercanbeyen.restaurantapplication.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +21,12 @@ import java.util.List;
 @Controller
 public class BillController {
     private final BillService billService;
+    private final EmployeeService employeeService;
 
     @GetMapping("/showOpenBillForm")
-    public String showOpenBillForm(Bill bill) {
+    public String showOpenBillForm(Bill bill, Model model) {
+        List<EmployeeDto> employeeDtos = employeeService.getEmployees();
+        model.addAttribute("employees", employeeDtos);
         return "open-bill";
     }
 

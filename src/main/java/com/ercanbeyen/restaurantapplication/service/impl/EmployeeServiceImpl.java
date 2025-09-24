@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+    private static final String EMPLOYEE_IS_NOT_FOUND = "Employee is not found";
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
 
@@ -56,13 +57,19 @@ public class EmployeeServiceImpl implements EmployeeService {
                         employeeRepository::delete
                         , () -> {
                             log.error("Employee {} is not found", id);
-                            throw new NotFoundException("Employee is not found");
+                            throw new NotFoundException(EMPLOYEE_IS_NOT_FOUND);
                         }
                 );
     }
 
+    @Override
+    public Employee findByFullName(String fullName) {
+        return employeeRepository.findByFullName(fullName)
+                .orElseThrow(() -> new NotFoundException(EMPLOYEE_IS_NOT_FOUND));
+    }
+
     private Employee findById(String id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Employee is not found"));
+                .orElseThrow(() -> new NotFoundException(EMPLOYEE_IS_NOT_FOUND));
     }
 }

@@ -23,6 +23,7 @@ public record BillDto(
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         LocalDateTime openDate,
+        String employeeFullName,
         List<@Valid Order> orders) {
 
 }

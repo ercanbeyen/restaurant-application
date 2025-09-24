@@ -15,6 +15,8 @@ public class Bill {
     @Column(unique = true, nullable = false)
     private Integer tableNumber;
     private LocalDateTime openDate;
+    @ManyToOne
+    private Employee employee;
     @ElementCollection
     @CollectionTable(
             name = "bill_orders",

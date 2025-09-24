@@ -6,9 +6,11 @@ import com.ercanbeyen.restaurantapplication.exception.AlreadyExistsException;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import com.ercanbeyen.restaurantapplication.mapper.BillMapper;
 import com.ercanbeyen.restaurantapplication.model.Bill;
+import com.ercanbeyen.restaurantapplication.model.Employee;
 import com.ercanbeyen.restaurantapplication.model.Order;
 import com.ercanbeyen.restaurantapplication.repository.BillRepository;
 import com.ercanbeyen.restaurantapplication.service.BillService;
+import com.ercanbeyen.restaurantapplication.service.EmployeeService;
 import com.ercanbeyen.restaurantapplication.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ public class BillServiceImpl implements BillService {
     private final BillRepository billRepository;
     private final BillMapper billMapper;
     private final ItemService itemService;
+    private final EmployeeService employeeService;
 
     @Override
     public BillDto openBill(BillDto request) {
@@ -37,6 +40,10 @@ public class BillServiceImpl implements BillService {
         }
 
         Bill bill = billMapper.dtoToEntity(request);
+        log.info("BillDto: {}", request);
+        log.info("Bill: {}", bill);
+        Employee employee = employeeService.findByFullName(request.employeeFullName());
+        bill.setEmployee(employee);
         bill.setOpenDate(LocalDateTime.now());
         return billMapper.entityToDto(billRepository.save(bill));
     }
