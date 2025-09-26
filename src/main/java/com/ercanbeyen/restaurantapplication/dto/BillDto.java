@@ -23,6 +23,10 @@ public record BillDto(
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         LocalDateTime openDate,
+        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+        LocalDateTime updateDate,
         String employeeFullName,
         List<@Valid Order> orders) {
 

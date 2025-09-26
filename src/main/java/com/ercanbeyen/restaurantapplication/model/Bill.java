@@ -15,6 +15,7 @@ public class Bill {
     @Column(unique = true, nullable = false)
     private Integer tableNumber;
     private LocalDateTime openDate;
+    private LocalDateTime updateDate;
     @ManyToOne
     private Employee employee;
     @ElementCollection

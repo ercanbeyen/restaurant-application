@@ -1,5 +1,7 @@
 package com.ercanbeyen.restaurantapplication.service.impl;
 
+import com.ercanbeyen.restaurantapplication.constant.enums.Model;
+import com.ercanbeyen.restaurantapplication.constant.message.ErrorMessage;
 import com.ercanbeyen.restaurantapplication.dto.BillDto;
 import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 import com.ercanbeyen.restaurantapplication.exception.AlreadyExistsException;
@@ -36,15 +38,15 @@ public class BillServiceImpl implements BillService {
                 .isPresent();
 
         if (isTableFilled) {
-            throw new AlreadyExistsException("Bill has already been opened for the table");
+            throw new AlreadyExistsException(String.format("%s has already been opened for the table", Model.BILL.getValue()));
         }
 
         Bill bill = billMapper.dtoToEntity(request);
-        log.info("BillDto: {}", request);
-        log.info("Bill: {}", bill);
         Employee employee = employeeService.findByFullName(request.employeeFullName());
         bill.setEmployee(employee);
-        bill.setOpenDate(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        bill.setOpenDate(now);
+        bill.setUpdateDate(now);
         return billMapper.entityToDto(billRepository.save(bill));
     }
 
@@ -65,15 +67,17 @@ public class BillServiceImpl implements BillService {
     @Transactional
     @Override
     public void closeBill(Integer tableNumber) {
+        String model = Model.BILL.getValue();
+
         billRepository.findByTableNumber(tableNumber)
                 .ifPresentOrElse(
                         bill -> billRepository.deleteByTableNumber(tableNumber)
                         , () -> {
-                            log.error("Bill with table number {} is not found", tableNumber);
-                            throw new NotFoundException("Bill is not found");
+                            log.error("{} with table number {} is not found", model, tableNumber);
+                            throw new NotFoundException(String.format(ErrorMessage.NOT_FOUND, model));
                         });
 
-        log.info("Bill with table number {} is successfully closed", tableNumber);
+        log.info("{} with table number {} is successfully closed", model, tableNumber);
     }
 
     @Transactional
@@ -83,12 +87,15 @@ public class BillServiceImpl implements BillService {
 
         for (Order orderInBill : bill.getOrders()) {
             if (orderInBill.getItemName().equals(order.getItemName())) {
-                log.error("Item has already been in the bill");
-                throw new AlreadyExistsException("Item is in the bill. Update the amount");
+                String itemModel = Model.ITEM.getValue();
+                String billModel = Model.BILL.getValue();
+                log.error("{} has already been in the {}", itemModel, billModel);
+                throw new AlreadyExistsException(String.format("%s is in the %s. Update the amount", itemModel, billModel));
             }
         }
 
         bill.getOrders().add(order);
+        bill.setUpdateDate(LocalDateTime.now());
         return billMapper.entityToDto(billRepository.save(bill));
     }
 
@@ -104,6 +111,7 @@ public class BillServiceImpl implements BillService {
             }
         }
 
+        bill.setUpdateDate(LocalDateTime.now());
         return billMapper.entityToDto(billRepository.save(bill));
     }
 
@@ -121,6 +129,7 @@ public class BillServiceImpl implements BillService {
         }
 
         bill.getOrders().remove(order);
+        bill.setUpdateDate(LocalDateTime.now());
         return billMapper.entityToDto(billRepository.save(bill));
     }
 
@@ -139,6 +148,6 @@ public class BillServiceImpl implements BillService {
 
     private Bill findByTableNumber(Integer tableNumber) {
         return billRepository.findByTableNumber(tableNumber)
-                .orElseThrow(() -> new NotFoundException("Bill is not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorMessage.NOT_FOUND, Model.BILL.getValue())));
     }
 }

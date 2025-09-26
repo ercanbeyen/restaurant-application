@@ -6,16 +6,23 @@
         <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
-        <form th:action="@{|/addOrder/tables/${tableNumber}|}" th:object="${order}" method="post">
-            <label for="itemName">Item Name:</label>
-            <input type="text" th:field="*{itemName}" id="itemName" placeholder="Item Name" />
-            <p th:if="${#fields.hasErrors('itemName')}" th:errorclass="error" th:errors="*{itemName}"></p>
-            <br/>
-            <label for="amount">Amount:</label>
-            <input type="text" th:field="*{amount}" id="amount" placeholder="Amount" />
-            <p th:if="${#fields.hasErrors('amount')}" th:errorclass="error" th:errors="*{amount}"></p>
-            <br/>
-            <button type="submit">Add Order</button>
-        </form>
+        <div class="centerAligned-container">
+            <form th:action="@{|/addOrder/tables/${tableNumber}|}" th:object="${order}" method="post">
+                <label for="itemName">Item Name:</label>
+                <input type="text" th:field="*{itemName}" id="itemName" placeholder="Item Name" />
+                <p th:if="${#fields.hasErrors('itemName')}" th:errorclass="error" th:errors="*{itemName}"></p>
+                <br/>
+                <label for="amount">Amount:</label>
+                <input type="text" th:field="*{amount}" id="amount" placeholder="Amount" />
+                <p th:if="${#fields.hasErrors('amount')}" th:errorclass="error" th:errors="*{amount}"></p>
+                <br/>
+                <button type="submit" class="sendForm-button">Add Order</button>
+            </form>
+            <div>
+                <a th:href="@{/bill-management}">
+                    <button type="button" class="billManagement-button">Go to bill management</button>
+                </a>
+            </div>
+        </div>
     </body>
 </html>

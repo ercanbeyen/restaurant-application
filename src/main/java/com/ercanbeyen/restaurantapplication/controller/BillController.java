@@ -25,8 +25,8 @@ public class BillController {
 
     @GetMapping("/showOpenBillForm")
     public String showOpenBillForm(Bill bill, Model model) {
-        List<EmployeeDto> employeeDtos = employeeService.getEmployees();
-        model.addAttribute("employees", employeeDtos);
+        List<EmployeeDto> response = employeeService.getEmployees();
+        model.addAttribute("employees", response);
         return "open-bill";
     }
 

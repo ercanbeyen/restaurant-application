@@ -6,23 +6,25 @@
         <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
-        <form th:action="@{/openBill}" th:object="${bill}" method="post">
-            <label for="tableNumber"><b>Table Number:</b></label>
-            <input type="text" th:field="*{tableNumber}" id="tableNumber" placeholder="Table Number" />
-            <p th:if="${#fields.hasErrors('tableNumber')}" th:errorclass="error" th:errors="*{tableNumber}"></p>
-            <br/>
-            <label for="employeeFullName"><b>Employee:</b></label>
-            <select name="employeeFullName" id="employeeFullName">
-                <option value="" th:disabled="disabled" th:selected="selected">Choose your option</option>
-                <option th:each="employee : ${employees}" th:value="${employee.fullName()}" th:text="${employee.fullName()}"></option>
-            </select>
-            <br/>
-            <button type="submit" class="sendForm-button">Open Bill</button>
-        </form>
-        <div>
-            <a th:href="@{/bill-management}">
-                <button type="button" class="billManagement-button">Go to bill management</button>
-            </a>
+        <div class="centerAligned-container">
+            <form th:action="@{/openBill}" th:object="${bill}" method="post">
+                <label for="tableNumber"><b>Table Number:</b></label>
+                <input type="text" th:field="*{tableNumber}" id="tableNumber" placeholder="Table Number" />
+                <p th:if="${#fields.hasErrors('tableNumber')}" th:errorclass="error" th:errors="*{tableNumber}"></p>
+                <br/>
+                <label for="employeeFullName"><b>Employee:</b></label>
+                <select name="employeeFullName" id="employeeFullName">
+                    <option value="" th:disabled="disabled" th:selected="selected">Choose your option</option>
+                    <option th:each="employee : ${employees}" th:value="${employee.fullName()}" th:text="${employee.fullName()}"></option>
+                </select>
+                <br/>
+                <button type="submit" class="sendForm-button">Open Bill</button>
+            </form>
+            <div>
+                <a th:href="@{/bill-management}">
+                    <button type="button" class="billManagement-button">Go to bill management</button>
+                </a>
+            </div>
         </div>
     </body>
 </html>

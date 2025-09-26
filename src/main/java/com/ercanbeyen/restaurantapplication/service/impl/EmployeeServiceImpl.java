@@ -1,5 +1,8 @@
 package com.ercanbeyen.restaurantapplication.service.impl;
 
+import com.ercanbeyen.restaurantapplication.constant.enums.Model;
+import com.ercanbeyen.restaurantapplication.constant.message.ErrorMessage;
+import com.ercanbeyen.restaurantapplication.constant.message.LogMessage;
 import com.ercanbeyen.restaurantapplication.dto.EmployeeDto;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import com.ercanbeyen.restaurantapplication.mapper.EmployeeMapper;
@@ -16,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private static final String EMPLOYEE_IS_NOT_FOUND = "Employee is not found";
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
 
@@ -24,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void createEmployee(EmployeeDto request) {
         Employee employee = employeeMapper.dtoToEntity(request);
         Employee savedEmployee = employeeRepository.save(employee);
-        log.info("Employee {} is successfully created", savedEmployee.getId());
+        log.info(LogMessage.SUCCESSFULLY_CREATED, Model.EMPLOYEE.getValue(), savedEmployee.getId());
     }
 
     @Override
@@ -34,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeRepository.save(employee);
 
-        log.info("Employee {} is successfully updated", id);
+        log.info(LogMessage.SUCCESSFULLY_UPDATED, Model.EMPLOYEE.getValue(), id);
     }
 
     @Override
@@ -52,24 +54,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployee(String id) {
+        String entity = Model.EMPLOYEE.getValue();
+
         employeeRepository.findById(id)
                 .ifPresentOrElse(
                         employeeRepository::delete
                         , () -> {
-                            log.error("Employee {} is not found", id);
-                            throw new NotFoundException(EMPLOYEE_IS_NOT_FOUND);
+                            log.error(LogMessage.NOT_FOUND, entity, id);
+                            throw new NotFoundException(String.format(ErrorMessage.NOT_FOUND, entity));
                         }
                 );
+
+        log.info(LogMessage.SUCCESSFULLY_DELETED, entity, id);
     }
 
     @Override
     public Employee findByFullName(String fullName) {
         return employeeRepository.findByFullName(fullName)
-                .orElseThrow(() -> new NotFoundException(EMPLOYEE_IS_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorMessage.NOT_FOUND, Model.EMPLOYEE.getValue())));
     }
 
     private Employee findById(String id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(EMPLOYEE_IS_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorMessage.NOT_FOUND, Model.EMPLOYEE.getValue())));
     }
 }

@@ -1,7 +1,10 @@
 package com.ercanbeyen.restaurantapplication.service.impl;
 
 
+import com.ercanbeyen.restaurantapplication.constant.enums.Model;
 import com.ercanbeyen.restaurantapplication.constant.enums.ItemCategory;
+import com.ercanbeyen.restaurantapplication.constant.message.ErrorMessage;
+import com.ercanbeyen.restaurantapplication.constant.message.LogMessage;
 import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import com.ercanbeyen.restaurantapplication.mapper.ItemMapper;
@@ -29,7 +32,7 @@ public class ItemServiceImpl implements ItemService {
     public void createItem(ItemDto request) {
         Item item = itemMapper.dtoToEntity(request);
         Item savedItem = itemRepository.save(item);
-        log.info("Item {} is successfully created", savedItem.getId());
+        log.info(LogMessage.SUCCESSFULLY_CREATED, Model.ITEM.getValue(), savedItem.getId());
     }
 
     @Override
@@ -43,7 +46,7 @@ public class ItemServiceImpl implements ItemService {
 
         itemRepository.save(item);
 
-        log.info("Item {} is successfully updated", item.getId());
+        log.info(LogMessage.SUCCESSFULLY_UPDATED, Model.ITEM.getValue(), item.getId());
     }
 
     @Override
@@ -70,7 +73,7 @@ public class ItemServiceImpl implements ItemService {
         String category = String.valueOf(item.getCategory());
         itemRepository.delete(item);
 
-        log.info("Item {} is successfully deleted", id);
+        log.info(LogMessage.SUCCESSFULLY_DELETED, Model.ITEM.getValue(), id);
         return category;
     }
 
@@ -85,12 +88,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDto getItemByName(String name) {
         Item item = itemRepository.findByName(name)
-                .orElseThrow(() -> new NotFoundException("Item is not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorMessage.NOT_FOUND, Model.ITEM.getValue())));
         return itemMapper.entityToDto(item);
     }
 
     private Item findById(Long id) {
         return itemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Item is not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorMessage.NOT_FOUND, Model.ITEM.getValue())));
     }
 }
