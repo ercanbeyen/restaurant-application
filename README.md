@@ -6,11 +6,12 @@
 
 ### Summary
 It is a restaurant application includes basic restaurant operations.<br/>
-There are 2 models in this project
+There are 3 models in this project
 
 Models:
 - Item
 - Bill
+- Employee
 
 ### Requirements
 - Item must have name, category and price.
