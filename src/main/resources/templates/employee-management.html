@@ -8,7 +8,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
     </head>
     <body>
-    <a th:href="@{/showCreateEmployeeForm}" class="btn btn-warning">Create Employee</a>
+    <a th:href="@{/employees/showCreateEmployeeForm}" class="btn btn-warning">Create Employee</a>
         <h2>Employees</h2>
         <div>
             <table class="table table-bordered">
@@ -24,8 +24,8 @@
                     <td th:text="${employee.id}"></td>
                     <td th:text="${employee.fullName}"></td>
                     <td>
-                        <a th:href="@{|/showUpdateEmployeeForm/${employee.id}|}" class="btn btn-primary">Update Employee</a>
-                        <a th:href="@{|/deleteEmployee/${employee.id}|}" class="btn btn-danger">Delete Employee</a>
+                        <a th:href="@{|/employees/showUpdateEmployeeForm/${employee.id}|}" class="btn btn-primary">Update Employee</a>
+                        <a th:href="@{|/employees/deleteEmployee/${employee.id}|}" class="btn btn-danger">Delete Employee</a>
                     </td>
                 </tr>
                 </tbody>

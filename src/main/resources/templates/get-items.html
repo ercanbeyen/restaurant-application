@@ -9,23 +9,23 @@
     </head>
     <body>
         <h2>Items</h2>
-        <a th:href="@{/showCreateItemForm}" class="btn btn-secondary">Create Item</a>
+        <a th:href="@{/items/showCreateItemForm}" class="btn btn-secondary">Create Item</a>
         <div>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>
-                            <a th:href="@{'/getItems?category=' + ${category} + '&sortField=name&sortDir=' + ${reverseSortDir}}">
+                            <a th:href="@{'/items/getItems?category=' + ${category} + '&sortField=name&sortDir=' + ${reverseSortDir}}">
                                 Name
                             </a>
                         </th>
                         <th>
-                            <a th:href="@{'/getItems?category=' + ${category} + '&sortField=category&sortDir=' + ${reverseSortDir}}">
+                            <a th:href="@{'/items/getItems?category=' + ${category} + '&sortField=category&sortDir=' + ${reverseSortDir}}">
                                 Category
                             </a>
                         </th>
                         <th>
-                            <a th:href="@{'/getItems?category=' + ${category} + '&sortField=price&sortDir=' + ${reverseSortDir}}">
+                            <a th:href="@{'/items/getItems?category=' + ${category} + '&sortField=price&sortDir=' + ${reverseSortDir}}">
                                 Price
                             </a>
                         </th>
@@ -38,9 +38,9 @@
                         <td th:text="${item.category}"></td>
                         <td th:text="${item.price}"></td>
                         <td>
-                            <a th:href="@{/showUpdateItemForm/{id}(id=${item.id})}" class="btn btn-primary">Update Item</a>
-                            <a th:href="@{/deleteItem/{id}(id=${item.id})}" class="btn btn-danger">Delete Item</a>
-                            <a th:href="@{/getItemByName/{name}(name=${item.name})}" class="btn btn-secondary">View Item</a>
+                            <a th:href="@{/items/showUpdateItemForm/{id}(id=${item.id})}" class="btn btn-primary">Update Item</a>
+                            <a th:href="@{/items/deleteItem/{id}(id=${item.id})}" class="btn btn-danger">Delete Item</a>
+                            <a th:href="@{/items/getItemByName/{name}(name=${item.name})}" class="btn btn-secondary">View Item</a>
                         </td>
                     </tr>
                 </tbody>
@@ -53,29 +53,29 @@
                     </div>
                     <div class="col-sm-1">
                         <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                            <a th:if="${currentPage != i}" th:href="@{'/getItems?category=' + ${category} + '&pageNo=' + ${i} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                            <a th:if="${currentPage != i}" th:href="@{'/items/getItems?category=' + ${category} + '&pageNo=' + ${i} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                             <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
                         </span>
                     </div>
                     <div class="col-sm-1">
-                        <a th:if="${currentPage > 1}" th:href="@{'/getItems?category=' + ${category} + '&pageNo=' + ${currentPage - 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+                        <a th:if="${currentPage > 1}" th:href="@{'/items/getItems?category=' + ${category} + '&pageNo=' + ${currentPage - 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
                         <span th:unless="${currentPage > 1}">Previous</span>
                     </div>
                     <div class = "col-sm-1">
-                        <a th:if="${currentPage < totalPages}" th:href="@{'/getItems?category=' + ${category} + '&pageNo=' + ${currentPage + 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/items/getItems?category=' + ${category} + '&pageNo=' + ${currentPage + 1} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
                         <span th:unless="${currentPage < totalPages}">Next</span>
                     </div>
                     <div class="col-sm-1">
-                        <a th:if="${currentPage > 1}" th:href="@{'/getItems?category=' + ${category} + '&pageNo=1' + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+                        <a th:if="${currentPage > 1}" th:href="@{'/items/getItems?category=' + ${category} + '&pageNo=1' + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
                         <span th:unless="${currentPage > 1}">First</span>
                     </div>
                     <div class="col-sm-1">
-                        <a th:if="${currentPage < totalPages}" th:href="@{'/getItems?category=' + ${category} + '&pageNo=' + ${totalPages} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/items/getItems?category=' + ${category} + '&pageNo=' + ${totalPages} + '&pageSize=' + ${pageSize} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
                         <span th:unless="${currentPage < totalPages}">Last</span>
                     </div>
                 </div>
             </div>
-            <a th:href="@{/menu}">
+            <a th:href="@{/items/menu}">
                 <button type="button" class="btn btn-primary btn-lg float-end">Go to menu</button>
             </a>
         </div>

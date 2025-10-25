@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="centerAligned-container">
-            <form th:action="@{/openBill}" th:object="${bill}" method="post">
+            <form th:action="@{/bills/openBill}" th:object="${bill}" method="post">
                 <label for="tableNumber"><b>Table Number:</b></label>
                 <input type="text" th:field="*{tableNumber}" id="tableNumber" placeholder="Table Number" />
                 <p th:if="${#fields.hasErrors('tableNumber')}" th:errorclass="error" th:errors="*{tableNumber}"></p>
@@ -21,7 +21,7 @@
                 <button type="submit" class="sendForm-button">Open Bill</button>
             </form>
             <div>
-                <a th:href="@{/bill-management}">
+                <a th:href="@{/bills/bill-management}">
                     <button type="button" class="billManagement-button">Go to bill management</button>
                 </a>
             </div>

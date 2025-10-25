@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="centerAligned-container">
-            <form th:action="@{|/addOrder/tables/${tableNumber}|}" th:object="${order}" method="post">
+            <form th:action="@{|/bills/addOrder/tables/${tableNumber}|}" th:object="${order}" method="post">
                 <label for="itemName">Item Name:</label>
                 <input type="text" th:field="*{itemName}" id="itemName" placeholder="Item Name" />
                 <p th:if="${#fields.hasErrors('itemName')}" th:errorclass="error" th:errors="*{itemName}"></p>

@@ -20,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/items")
 public class ItemController {
     private final ItemService itemService;
 
@@ -130,6 +131,6 @@ public class ItemController {
     }
 
     private String callGetItems(String category) {
-        return String.format("redirect:/getItems?category=%s&pageNo=%d&pageSize=%d&sortField=%s&sortDir=%s", category, 1, 5, "name", "asc");
+        return String.format("redirect:/items/getItems?category=%s&pageNo=%d&pageSize=%d&sortField=%s&sortDir=%s", category, 1, 5, "name", "asc");
     }
 }

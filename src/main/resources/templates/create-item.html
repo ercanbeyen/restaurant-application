@@ -8,7 +8,7 @@
     <body>
         <div class="centerAligned-container">
             <h2>Item</h2>
-            <form th:action="@{/createItem}" th:object="${item}" method="post">
+            <form th:action="@{/items/createItem}" th:object="${item}" method="post">
                 <label for="name"><b>Name:</b></label>
                 <input type="text" th:field="*{name}" id="name" placeholder="Name" />
                 <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
@@ -30,7 +30,7 @@
                 <button type="submit" class="sendForm-button">Create Item</button>
             </form>
             <div>
-                <a th:href="@{/menu}">
+                <a th:href="@{/items/menu}">
                     <button type="button" class="menu-button">Go to menu</button>
                 </a>
             </div>

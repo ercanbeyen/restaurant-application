@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="centerAligned-container">
-            <form th:action="@{|/updateOrder/tables/${tableNumber}/orders/${order.itemName}|}" th:object="${order}" method="post">
+            <form th:action="@{|/items/updateOrder/tables/${tableNumber}/orders/${order.itemName}|}" th:object="${order}" method="post">
                 <label for="itemName">Item Name:</label>
                 <input type="text" th:field="*{itemName}" id="itemName" value="${order.itemName}" readonly />
                 <br/>
@@ -18,7 +18,7 @@
                 <button type="submit" class="sendForm-button">Update Order</button>
             </form>
             <div>
-                <a th:href="@{/bill-management}">
+                <a th:href="@{/items/bill-management}">
                     <button type="button" class="billManagement-button">Go to bill management</button>
                 </a>
             </div>

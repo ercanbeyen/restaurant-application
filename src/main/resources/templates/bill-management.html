@@ -7,7 +7,7 @@
     </head>
     <body>
         <h2>Bill Management</h2>
-        <a th:href="@{/showOpenBillForm}">
+        <a th:href="@{/bills/showOpenBillForm}">
             <button type="button" class="sendForm-button">Open Bill</button>
         </a> &nbsp;
         <a th:href="@{/}">
@@ -17,7 +17,7 @@
         <div>
             <ul>
                 <li th:each="bill : ${bills}">
-                    <a th:href="@{/getBill/tables/{tableNumber}(tableNumber=${bill.tableNumber})}" th:text="'Table Number: ' + ${bill.tableNumber}"></a>
+                    <a th:href="@{/bills/getBill/tables/{tableNumber}(tableNumber=${bill.tableNumber})}" th:text="'Table Number: ' + ${bill.tableNumber}"></a>
                 </li>
             </ul>
         </div>

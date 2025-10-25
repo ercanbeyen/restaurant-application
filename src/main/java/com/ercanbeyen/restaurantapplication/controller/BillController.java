@@ -19,6 +19,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/bills")
 public class BillController {
     private final BillService billService;
     private final EmployeeService employeeService;
@@ -100,6 +101,6 @@ public class BillController {
     }
 
     private String callGetBill(Integer tableNumber) {
-        return String.format("redirect:/getBill/tables/%d", tableNumber);
+        return String.format("redirect:/bills/getBill/tables/%d", tableNumber);
     }
 }
