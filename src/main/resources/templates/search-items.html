@@ -8,13 +8,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <h2>Items</h2>
         <div class="container mt-5">
             <form th:action="@{/items/search}" method="get">
                 <div class="input-group mb-3">
                     <label for="itemName"><span class="input-group-text">Name</span></label>
                     <input type="text" id="itemName" class="form-control" th:name="name" size="50" placeholder="Name" />
                 </div>
-                <button class="btn btn-info" type="submit">Search</button>
+                <button type="submit" class="button search-button float-left btn-gap">Search</button>
             </form>
             <table class="table table-bordered table-sm mt-2">
                 <thead>
@@ -36,7 +37,7 @@
             </table>
             <div>
                 <a th:href="@{/items/menu}">
-                    <button type="button" class="menu-button">Go to menu</button>
+                    <button type="button" class="button menu-button float-right btn-gap">Go to menu</button>
                 </a>
             </div>
         </div>

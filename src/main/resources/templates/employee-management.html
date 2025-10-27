@@ -8,30 +8,32 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
     </head>
     <body>
-    <a th:href="@{/employees/showCreateEmployeeForm}" class="btn btn-warning">Create Employee</a>
         <h2>Employees</h2>
         <div>
+            <a th:href="@{/employees/showCreateEmployeeForm}">
+                <button type="button" class="btn btn-secondary btn-gap">Create Employee</button>
+            </a>
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Full Name</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>Full Name</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="employee : ${employees}">
-                    <td th:text="${employee.id}"></td>
-                    <td th:text="${employee.fullName}"></td>
-                    <td>
-                        <a th:href="@{|/employees/showUpdateEmployeeForm/${employee.id}|}" class="btn btn-primary">Update Employee</a>
-                        <a th:href="@{|/employees/deleteEmployee/${employee.id}|}" class="btn btn-danger">Delete Employee</a>
-                    </td>
-                </tr>
+                    <tr th:each="employee : ${employees}">
+                        <td th:text="${employee.id}"></td>
+                        <td th:text="${employee.fullName}"></td>
+                        <td>
+                            <a th:href="@{|/employees/showUpdateEmployeeForm/${employee.id}|}" class="btn btn-primary">Update Employee</a>
+                            <a th:href="@{|/employees/deleteEmployee/${employee.id}|}" class="btn btn-danger">Delete Employee</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <a th:href="@{/}">
-                <button type="button" class="btn btn-primary btn-lg float-end">Go to welcome</button>
+                <button type="button" class="btn btn-primary btn-lg float-end btn-gap">Go to welcome</button>
             </a>
         </div>
     </body>

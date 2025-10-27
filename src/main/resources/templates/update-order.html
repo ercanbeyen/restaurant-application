@@ -6,6 +6,7 @@
         <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
+        <h2>Order</h2>
         <div class="centerAligned-container">
             <form th:action="@{|/items/updateOrder/tables/${tableNumber}/orders/${order.itemName}|}" th:object="${order}" method="post">
                 <label for="itemName">Item Name:</label>
@@ -15,11 +16,11 @@
                 <input type="text" th:field="*{amount}" id="amount" placeholder="Amount" />
                 <p th:if="${#fields.hasErrors('amount')}" th:errorclass="error" th:errors="*{amount}"></p>
                 <br/>
-                <button type="submit" class="sendForm-button">Update Order</button>
+                <button type="submit" class="button sendForm-button">Update Order</button>
             </form>
             <div>
                 <a th:href="@{/items/bill-management}">
-                    <button type="button" class="billManagement-button">Go to bill management</button>
+                    <button type="button" class="button billManagement-button">Go to bill management</button>
                 </a>
             </div>
         </div>

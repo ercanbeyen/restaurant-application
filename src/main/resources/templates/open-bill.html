@@ -6,6 +6,7 @@
         <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
+        <h2>Bill</h2>
         <div class="centerAligned-container">
             <form th:action="@{/bills/openBill}" th:object="${bill}" method="post">
                 <label for="tableNumber"><b>Table Number:</b></label>
@@ -18,11 +19,11 @@
                     <option th:each="employee : ${employees}" th:value="${employee.fullName()}" th:text="${employee.fullName()}"></option>
                 </select>
                 <br/>
-                <button type="submit" class="sendForm-button">Open Bill</button>
+                <button type="submit" class="button sendForm-button">Open Bill</button>
             </form>
             <div>
                 <a th:href="@{/bills/bill-management}">
-                    <button type="button" class="billManagement-button">Go to bill management</button>
+                    <button type="button" class="button billManagement-button">Go to bill management</button>
                 </a>
             </div>
         </div>

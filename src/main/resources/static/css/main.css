@@ -1,9 +1,5 @@
-h2 {
+.centerAligned-container, h2 {
     text-align: center;
-}
-
-.centerAligned-container {
-    text-align: center
 }
 
 .error {
@@ -14,92 +10,77 @@ h2 {
     margin-top: 1%;
 }
 
-.sendForm-button {
+.btn-gap {
+    /*margin: 1%;*/
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.button {
     color: black
     background-color: white;
-    border: 2px solid green;
     margin-top: 1%;
     transition-duration: 0.4s;
+}
+
+.button:hover {
+    color: white;
+    border-radius: 8px;
+    margin-top: 1%;
+}
+
+.sendForm-button {
+    border: 2px solid green;
 }
 
 .sendForm-button:hover {
-    color: white;
     background-color: green;
-    border-radius: 8px;
-    margin-top: 1%;
 }
 
 .billManagement-button {
-    color: black
-    background-color: white;
     border: 2px solid brown;
-    margin-top: 1%;
-    transition-duration: 0.4s;
 }
 
 .billManagement-button:hover {
-    color: white;
     background-color: brown;
-    border-radius: 8px;
-    margin-top: 1%;
 }
 
 .menu-button {
-    color: black
-    background-color: white;
     border: 2px solid red;
-    margin-top: 1%;
-    transition-duration: 0.4s;
 }
 
 .menu-button:hover {
-    color: white;
     background-color: red;
-    border-radius: 8px;
-    margin-top: 1%;
 }
 
 .welcome-button {
-    color: black
-    background-color: white;
     border: 2px solid blue;
-    margin-top: 1%;
-    transition-duration: 0.4s;
 }
 
 .welcome-button:hover {
-    color: white;
     background-color: blue;
-    border-radius: 8px;
-    margin-top: 1%;
 }
 
 .employeeManagement-button {
-    color: black
-    background-color: white;
     border: 2px solid brown;
-    margin-top: 1%;
-    transition-duration: 0.4s;
 }
 
 .employeeManagement-button:hover {
-    color: white;
     background-color: brown;
-    border-radius: 8px;
-    margin-top: 1%;
 }
 
 .search-button {
-    color: black
-    background-color: white;
     border: 2px solid orange;
-    margin-top: 1%;
-    transition-duration: 0.4s;
 }
 
 .search-button:hover {
-    color: white;
     background-color: orange;
-    border-radius: 8px;
-    margin-top: 1%;
 }

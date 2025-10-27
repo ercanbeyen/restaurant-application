@@ -6,8 +6,8 @@
         <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
+        <h2>Item</h2>
         <div class="centerAligned-container">
-            <h2>Item</h2>
             <form th:action="@{/items/createItem}" th:object="${item}" method="post">
                 <label for="name"><b>Name:</b></label>
                 <input type="text" th:field="*{name}" id="name" placeholder="Name" />
@@ -27,11 +27,11 @@
                 <input type="text" th:field="*{ingredients}" id="ingredients" placeholder="Ingredients" />
                 <p th:if="${#fields.hasErrors('ingredients')}" th:errorclass="error" th:errors="*{ingredients}"></p>
                 <br/>
-                <button type="submit" class="sendForm-button">Create Item</button>
+                <button type="submit" class="button sendForm-button">Create Item</button>
             </form>
             <div>
                 <a th:href="@{/items/menu}">
-                    <button type="button" class="menu-button">Go to menu</button>
+                    <button type="button" class="button menu-button">Go to menu</button>
                 </a>
             </div>
         </div>

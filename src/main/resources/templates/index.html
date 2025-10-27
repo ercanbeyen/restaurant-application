@@ -8,15 +8,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
+        <h2>Welcome to the Restaurant!</h2>
         <div class="container pt-5">
-            <h2>Welcome to the Restaurant!</h2>
             <div class="alert alert-info">
                 <p>Restaurant is open from <strong>8 am to 10 pm</strong></p>
             </div>
             <a th:href="@{/items/menu}">
                 <button type="button" class="btn btn-primary">Go to menu</button>
             </a> &nbsp;
-            <a th:href="@{/items/bill-management}">
+            <a th:href="@{/bills/bill-management}">
                 <button type="button" class="btn btn-secondary">Go to bill management</button>
             </a> &nbsp;
             <a th:href="@{/employees/employee-management}">
