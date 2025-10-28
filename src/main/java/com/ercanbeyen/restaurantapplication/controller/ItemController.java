@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -108,12 +109,15 @@ public class ItemController {
 
     @GetMapping("/search")
     public String searchItems(@RequestParam(value = "name", required = false) String name, Model model) {
+        List<ItemDto> items = new ArrayList<>();
+
         if (StringUtils.isBlank(name)) {
             log.warn("No name is entered to search");
         } else {
-            List<ItemDto> items = itemService.searchItems(name);
-            model.addAttribute("items", items);
+            items = itemService.searchItems(name);
         }
+
+        model.addAttribute("items", items);
 
         return "search-items";
     }
