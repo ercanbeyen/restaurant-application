@@ -22,7 +22,7 @@ Models:
 
 ### Tech Stack
 ---
-- Java 21
+- Java 25
 - HTML
 - CSS
 - Spring Boot
