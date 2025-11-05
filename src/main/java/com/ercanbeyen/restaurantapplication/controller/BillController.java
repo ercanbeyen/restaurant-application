@@ -72,7 +72,7 @@ public class BillController {
     @GetMapping("/closeBill/tables/{tableNumber}")
     public String closeBill(@PathVariable("tableNumber") Integer tableNumber) {
         billService.closeBill(tableNumber);
-        return "redirect:/bill-management";
+        return "redirect:/bills/bill-management";
     }
 
     @PostMapping("/addOrder/tables/{tableNumber}")

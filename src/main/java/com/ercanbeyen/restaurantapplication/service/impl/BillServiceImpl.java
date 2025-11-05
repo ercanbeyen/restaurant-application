@@ -71,7 +71,7 @@ public class BillServiceImpl implements BillService {
 
         billRepository.findByTableNumber(tableNumber)
                 .ifPresentOrElse(
-                        bill -> billRepository.deleteByTableNumber(tableNumber)
+                        _ -> billRepository.deleteByTableNumber(tableNumber)
                         , () -> {
                             log.error("{} with table number {} is not found", model, tableNumber);
                             throw new NotFoundException(String.format(ErrorMessage.NOT_FOUND, model));
