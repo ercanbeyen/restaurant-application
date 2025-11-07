@@ -15,4 +15,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Page<Item> findByCategory(ItemCategory itemCategory, Pageable pageable);
     List<Item> findByNameContainingIgnoreCase(String name);
     Optional<Item> findByName(String name);
+    boolean existsByName(String name);
 }

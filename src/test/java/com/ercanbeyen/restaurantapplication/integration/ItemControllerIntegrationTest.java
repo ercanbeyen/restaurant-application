@@ -23,8 +23,9 @@ import java.util.List;
 @Sql(value = {"/test-data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @SpringBootTest
 @AutoConfigureMockMvc
-@Slf4j
 @ActiveProfiles("test")
+@Slf4j
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ItemControllerIntegrationTest {
     @Resource
     private WebApplicationContext webApplicationContext;
@@ -56,9 +57,8 @@ class ItemControllerIntegrationTest {
     @Test
     @Order(1)
     @DisplayName("Happy path test: Create item case")
-    void testCreateItem() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-                        .post("/items/createItem")
+    void givenItemDto_whenCreateItem_thenRedirectToGetItemsView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/items/createItem")
                         .flashAttr("item", new ItemDto(null, "Test Item 4", ItemCategory.APPETIZER.toString(), 1.5D, List.of("ingredient1", "ingredient2")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -69,10 +69,22 @@ class ItemControllerIntegrationTest {
 
     @Test
     @Order(2)
+    @DisplayName("Exception path test: Create item case")
+    void givenItemDto_whenCreateItem_thenRedirectToErrorView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/items/createItem")
+                        .flashAttr("item", new ItemDto(null, "Test Item 4", ItemCategory.APPETIZER.toString(), 1.5D, List.of("ingredient1", "ingredient2")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("error"));
+    }
+
+    @Test
+    @Order(3)
     @DisplayName("Happy path test: Get item case")
-    void testGetItem() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-                        .get("/items/getItem/{id}", 1)
+    void givenId_whenGetItem_thenRedirectToGetItemView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/getItem/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -80,9 +92,20 @@ class ItemControllerIntegrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
+    @DisplayName("Exception path test: Get item case")
+    void givenId_whenGetItem_thenRedirectToErrorView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/getItem/{id}", 25)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("error"));
+    }
+
+    @Test
+    @Order(5)
     @DisplayName("Happy path test: Update item case")
-    void testUpdateItem() throws Exception {
+    void givenItemDto_whenUpdateItem_thenRedirectToGetItemsView() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/items/updateItem/{id}", 2)
                         .flashAttr("item", new ItemDto(2L, "Updated Test Item", ItemCategory.BEVERAGE.toString(), 1.5D, List.of("ingredient1", "ingredient2")))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,11 +116,34 @@ class ItemControllerIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(6)
+    @DisplayName("Exception path test: Update item case")
+    void givenItemDto_whenUpdateItem_thenRedirectToErrorView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/items/updateItem/{id}", 2)
+                        .flashAttr("item", new ItemDto(2L, "Test Item 4", ItemCategory.BEVERAGE.toString(), 1.5D, List.of("ingredient1", "ingredient2")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("error"));
+    }
+
+    @Test
+    @Order(7)
     @DisplayName("Happy path test: Delete item case")
-    void testDeleteItem() throws Exception {
+    void givenId_whenDeleteItem_thenRedirectToGetItemsView() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/deleteItem/{id}", 3))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/items/getItems?category=SALAD&pageNo=1&pageSize=5&sortField=name&sortDir=asc"));
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("Exception path test: Delete item case")
+    void givenId_whenDeleteItem_thenRedirectToErrorView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/deleteItem/{id}", 25))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("error"));
     }
 }

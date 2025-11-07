@@ -6,6 +6,7 @@ import com.ercanbeyen.restaurantapplication.constant.enums.ItemCategory;
 import com.ercanbeyen.restaurantapplication.constant.message.ErrorMessage;
 import com.ercanbeyen.restaurantapplication.constant.message.LogMessage;
 import com.ercanbeyen.restaurantapplication.dto.ItemDto;
+import com.ercanbeyen.restaurantapplication.exception.AlreadyExistsException;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import com.ercanbeyen.restaurantapplication.mapper.ItemMapper;
 import com.ercanbeyen.restaurantapplication.model.Item;
@@ -30,6 +31,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void createItem(ItemDto request) {
+        checkName(request.name());
         Item item = itemMapper.dtoToEntity(request);
         Item savedItem = itemRepository.save(item);
         log.info(LogMessage.SUCCESSFULLY_CREATED, Model.ITEM.getValue(), savedItem.getId());
@@ -38,6 +40,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void updateItem(Long id, ItemDto request) {
         Item item = findById(id);
+
+        if (!item.getName().equals(request.name())) {
+            checkName(request.name());
+        }
 
         item.setName(request.name());
         item.setCategory(ItemCategory.valueOf(request.category()));
@@ -90,6 +96,14 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findByName(name)
                 .orElseThrow(() -> new NotFoundException(String.format(ErrorMessage.NOT_FOUND, Model.ITEM.getValue())));
         return itemMapper.entityToDto(item);
+    }
+
+    private void checkName(String name) {
+        if (itemRepository.existsByName(name)) {
+            throw new AlreadyExistsException(String.format(ErrorMessage.ALREADY_EXISTS, Model.ITEM.getValue()));
+        }
+
+        log.info("Item name \"{}\" does not exist", name);
     }
 
     private Item findById(Long id) {
