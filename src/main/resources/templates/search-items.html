@@ -10,7 +10,7 @@
     <body>
         <h2>Items</h2>
         <div class="container mt-5">
-            <form th:action="@{/items/search}" method="get">
+            <form th:action="@{/items/searchItems}" method="get">
                 <div class="input-group mb-3">
                     <label for="itemName"><span class="input-group-text">Name</span></label>
                     <input type="text" id="itemName" class="form-control" th:name="name" size="50" placeholder="Name" />

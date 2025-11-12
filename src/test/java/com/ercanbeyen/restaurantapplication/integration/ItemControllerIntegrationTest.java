@@ -88,6 +88,7 @@ class ItemControllerIntegrationTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("item"))
                 .andExpect(MockMvcResultMatchers.view().name("get-item"));
     }
 
@@ -130,6 +131,19 @@ class ItemControllerIntegrationTest {
 
     @Test
     @Order(7)
+    @DisplayName("Happy path test: Search items case")
+    void givenName_whenSearchItems_thenRedirectToSearchItemsView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/searchItems").param("name", "Test Item")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("items"))
+                .andExpect(MockMvcResultMatchers.view().name("search-items"));
+
+    }
+
+    @Test
+    @Order(8)
     @DisplayName("Happy path test: Delete item case")
     void givenId_whenDeleteItem_thenRedirectToGetItemsView() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/deleteItem/{id}", 3))
@@ -138,12 +152,46 @@ class ItemControllerIntegrationTest {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     @DisplayName("Exception path test: Delete item case")
     void givenId_whenDeleteItem_thenRedirectToErrorView() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/deleteItem/{id}", 25))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("error"));
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("Happy path test: Get item by name case")
+    void givenName_whenGetItemByName_thenRedirectToGetItemView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/getItemByName/{name}", "Updated Test Item")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("item"))
+                .andExpect(MockMvcResultMatchers.view().name("get-item"));
+    }
+
+    @Test
+    @Order(11)
+    @DisplayName("Exception path test: Get item by name case")
+    void givenName_whenGetItemByName_thenRedirectToErrorView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/getItemByName/{name}", "Unknown Test Item")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("item"))
+                .andExpect(MockMvcResultMatchers.view().name("error"));
+    }
+
+    @Test
+    @Order(12)
+    @DisplayName("Happy path test: Show menu page case")
+    void whenShowMenuPage_thenRedirectToMenuView() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/menu"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("menu"));
     }
 }

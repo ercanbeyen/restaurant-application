@@ -101,13 +101,12 @@ public class ItemController {
     }
 
     @GetMapping("/deleteItem/{id}")
-    public String deleteItem(@PathVariable("id") Long id, Model model) {
+    public String deleteItem(@PathVariable("id") Long id) {
         String category = itemService.deleteItem(id);
-        model.addAttribute("id", id);
         return callGetItems(category);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchItems")
     public String searchItems(@RequestParam(value = "name", required = false) String name, Model model) {
         List<ItemDto> items = new ArrayList<>();
 
