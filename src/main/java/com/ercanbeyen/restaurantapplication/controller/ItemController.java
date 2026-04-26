@@ -29,6 +29,7 @@ public class ItemController {
     public String showCreateItemForm(Item item, Model model) {
         List<ItemCategory> categories = List.of(ItemCategory.values());
         model.addAttribute("categories", categories);
+
         return "create-item";
     }
 
@@ -39,6 +40,7 @@ public class ItemController {
         }
 
         itemService.createItem(request);
+
         return callGetItems(request.category());
     }
 
@@ -60,6 +62,7 @@ public class ItemController {
         }
 
         itemService.updateItem(id, request);
+
         return callGetItems(request.category());
     }
 
@@ -67,6 +70,7 @@ public class ItemController {
     public String getItem(@PathVariable("id") Long id, Model model) {
         ItemDto itemDto = itemService.getItem(id);
         model.addAttribute("item", itemDto);
+
         return "get-item";
     }
 
@@ -125,6 +129,7 @@ public class ItemController {
     public String getItemByName(@PathVariable("name") String name, Model model) {
         ItemDto itemDto = itemService.getItemByName(name);
         model.addAttribute("item", itemDto);
+
         return "get-item";
     }
 

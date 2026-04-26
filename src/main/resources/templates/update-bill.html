@@ -2,16 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Open Bill Page</title>
+        <title>Update Bill Page</title>
         <link th:href="@{/css/main.css}" rel="stylesheet" />
     </head>
     <body>
         <h2>Bill</h2>
         <div class="centerAligned-container">
-            <form th:action="@{/bills/openBill}" th:object="${bill}" method="post">
+            <form th:action="@{|/bills/updateBill/tables/${bill.tableNumber}|}" th:object="${bill}" method="post">
                 <label for="tableNumber"><b>Table Number:</b></label>
-                <input type="text" th:field="*{tableNumber}" id="tableNumber" placeholder="Table Number" />
-                <p th:if="${#fields.hasErrors('tableNumber')}" th:errorclass="error" th:errors="*{tableNumber}"></p>
+                <input type="text" th:field="*{tableNumber}" id="tableNumber" value="${bill.tableNumber}" readonly />
                 <br/>
                 <label for="employeeFullName"><b>Employee:</b></label>
                 <select name="employeeFullName" id="employeeFullName">
@@ -19,7 +18,7 @@
                     <option th:each="employee : ${employees}" th:value="${employee.fullName()}" th:text="${employee.fullName()}"></option>
                 </select>
                 <br/>
-                <button type="submit" class="button sendForm-button">Open Bill</button>
+                <button type="submit" class="button sendForm-button">Update Bill</button>
             </form>
             <div>
                 <a th:href="@{/bills/bill-management}">

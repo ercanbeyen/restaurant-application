@@ -26,9 +26,21 @@ public class BillController {
 
     @GetMapping("/showOpenBillForm")
     public String showOpenBillForm(Bill bill, Model model) {
-        List<EmployeeDto> response = employeeService.getEmployees();
-        model.addAttribute("employees", response);
+        List<EmployeeDto> requestedEmployees = employeeService.getEmployees();
+        model.addAttribute("employees", requestedEmployees);
+
         return "open-bill";
+    }
+
+    @GetMapping("/showUpdateBillForm/tables/{tableNumber}")
+    public String showUpdateBillForm(@PathVariable("tableNumber") Integer tableNumber, Model model) {
+        BillDto requestedBill =  billService.getBill(tableNumber);
+        List<EmployeeDto> requestedEmployees = employeeService.getEmployees();
+
+        model.addAttribute("bill", requestedBill);
+        model.addAttribute("employees", requestedEmployees);
+
+        return "update-bill";
     }
 
     @GetMapping("/showAddOrderForm/tables/{tableNumber}")
@@ -36,6 +48,7 @@ public class BillController {
         Order order = new Order();
         model.addAttribute("order", order);
         model.addAttribute("tableNumber", tableNumber);
+
         return "add-order";
     }
 
@@ -45,6 +58,7 @@ public class BillController {
         order.setItemName(itemName);
         model.addAttribute("order", order);
         model.addAttribute("tableNumber", tableNumber);
+
         return "update-order";
     }
 
@@ -55,6 +69,7 @@ public class BillController {
         }
 
         BillDto response = billService.openBill(request);
+
         return callGetBill(response.tableNumber());
     }
 
@@ -67,6 +82,17 @@ public class BillController {
         model.addAttribute("sum", sum);
 
         return "get-bill";
+    }
+
+    @PostMapping("/updateBill/tables/{tableNumber}")
+    public String updateBill(@PathVariable("tableNumber") Integer tableNumber, @Valid @ModelAttribute("bill") BillDto request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "update-bill";
+        }
+
+        BillDto response = billService.updateBill(tableNumber, request);
+
+        return callGetBill(response.tableNumber());
     }
 
     @GetMapping("/closeBill/tables/{tableNumber}")
@@ -97,6 +123,7 @@ public class BillController {
     public String showBillManagementPage(Model model) {
         List<BillDto> response = billService.getBills();
         model.addAttribute("bills", response);
+
         return "bill-management";
     }
 

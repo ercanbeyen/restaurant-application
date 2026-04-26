@@ -64,6 +64,15 @@ public class BillServiceImpl implements BillService {
                 .toList();
     }
 
+    @Override
+    public BillDto updateBill(Integer tableNumber, BillDto request) {
+        Bill bill = findByTableNumber(tableNumber);
+        Employee employee = employeeService.findByFullName(request.employeeFullName());
+        bill.setEmployee(employee);
+        bill.setUpdateDate(LocalDateTime.now());
+        return billMapper.entityToDto(billRepository.save(bill));
+    }
+
     @Transactional
     @Override
     public void closeBill(Integer tableNumber) {

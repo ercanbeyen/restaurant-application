@@ -9,6 +9,7 @@ public interface BillService {
     BillDto openBill(BillDto request);
     BillDto getBill(Integer tableNumber);
     List<BillDto> getBills();
+    BillDto updateBill(Integer tableNumber, BillDto request);
     void closeBill(Integer tableNumber);
     BillDto addOrder(Integer tableNumber, Order order);
     BillDto updateOrder(Integer tableNumber, Order order);

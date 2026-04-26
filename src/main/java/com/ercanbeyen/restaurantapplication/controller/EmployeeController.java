@@ -33,13 +33,15 @@ public class EmployeeController {
         }
 
         employeeService.createEmployee(request);
+
         return REDIRECT_EMPLOYEE_MANAGEMENT;
     }
 
     @GetMapping("/showUpdateEmployeeForm/{id}")
     public String showUpdateEmployeeForm(@PathVariable("id") String id, Model model) {
-        EmployeeDto response = employeeService.getEmployee(id);
-        model.addAttribute("employee", response);
+        EmployeeDto request = employeeService.getEmployee(id);
+        model.addAttribute("employee", request);
+
         return "update-employee";
     }
 
@@ -50,6 +52,7 @@ public class EmployeeController {
         }
 
         employeeService.updateEmployee(id, request);
+
         return REDIRECT_EMPLOYEE_MANAGEMENT;
     }
 
@@ -63,6 +66,7 @@ public class EmployeeController {
     public String showEmployeeManagementPage(Model model) {
         List<EmployeeDto> response = employeeService.getEmployees();
         model.addAttribute("employees", response);
+
         return "employee-management";
     }
 }
