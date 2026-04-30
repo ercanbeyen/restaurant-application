@@ -20,6 +20,7 @@
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<commons-lang3.version>3.19.0</commons-lang3.version>
 		<jackson-datatype-jsr310.version>3.0.0-rc2</jackson-datatype-jsr310.version>
+		<zxing.barcode-version>3.5.3</zxing.barcode-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -68,6 +69,16 @@
             <groupId>tools.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
 			<version>${jackson-datatype-jsr310.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>${zxing.barcode-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>${zxing.barcode-version}</version>
 		</dependency>
 	</dependencies>
 
