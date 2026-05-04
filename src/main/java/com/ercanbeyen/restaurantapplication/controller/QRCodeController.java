@@ -48,4 +48,9 @@ public class QRCodeController {
     public String showGenerateQRCodePage() {
         return "generate-qr";
     }
+
+    @GetMapping("/read-qr")
+    public String showReadQRCodePage() {
+        return "read-qr";
+    }
 }
