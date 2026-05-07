@@ -14,43 +14,81 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/qr")
 public class QRCodeController {
-    @GetMapping(value = "/generate", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<BufferedImage> generateQRCode(@RequestParam("text") String request) throws WriterException {
+    private static final int WIDTH = 250;
+    private static final int HEIGHT = 250;
+    private static final String IMAGE_FORMAT = "PNG";
+
+    @GetMapping(value = "/generate/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<BufferedImage> generateQRCodeImage(@RequestParam("text") String request) throws WriterException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(request, BarcodeFormat.QR_CODE, 250, 250);
+        BitMatrix bitMatrix = qrCodeWriter.encode(request, BarcodeFormat.QR_CODE, WIDTH, HEIGHT);
         BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
 
         return ResponseEntity.ok(bufferedImage);
     }
 
-    @PostMapping("/read")
-    public ResponseEntity<String> readQRCode(@RequestParam("file") MultipartFile request) throws IOException, NotFoundException {
+    @PostMapping("/read/image")
+    public ResponseEntity<String> readQRCodeImage(@RequestParam("file") MultipartFile request) throws IOException, NotFoundException {
         BufferedImage bufferedImage = ImageIO.read(request.getInputStream());
-        LuminanceSource luminanceSource = new BufferedImageLuminanceSource(bufferedImage);
+        return ResponseEntity.ok(decodeBufferedImage(bufferedImage));
+    }
 
-        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
-        Result result = new MultiFormatReader().decode(binaryBitmap);
+    @GetMapping(value = "/generate/base64")
+    public ResponseEntity<Map<String, String>> generateQRCodeBase64(@RequestParam("text") String request) throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(request, BarcodeFormat.QR_CODE, WIDTH, HEIGHT);
 
-        return ResponseEntity.ok(result.getText());
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(bitMatrix, IMAGE_FORMAT, byteArrayOutputStream);
+
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        String encodedText = Base64.getEncoder().encodeToString(imageBytes);
+
+        return ResponseEntity.ok(Map.of("image", encodedText));
+    }
+
+    @PostMapping("/read/base64")
+    public ResponseEntity<Map<String, String>> readQRCodeBase64(@RequestParam("text") String request) throws IOException, NotFoundException {
+        String base64 = request.contains(",") ? request.split(",")[1] : request; // remove "data:image/png;base64," section
+
+        byte[] imageBytes = Base64.getDecoder().decode(base64);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageBytes);
+        BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
+
+        String qrContent = decodeBufferedImage(bufferedImage);
+
+        return ResponseEntity.ok(Map.of("content", qrContent));
     }
 
     @GetMapping("/qr-management")
-    public String showQRManagementPage() {
+    public String showQRCodeManagementPage() {
         return "qr-management";
     }
 
-    @GetMapping("/generate-qr")
+    @GetMapping("/generate-qr/image")
     public String showGenerateQRCodePage() {
         return "generate-qr";
     }
 
-    @GetMapping("/read-qr")
+    @GetMapping("/read-qr/image")
     public String showReadQRCodePage() {
         return "read-qr";
+    }
+
+    private static String decodeBufferedImage(BufferedImage bufferedImage) throws NotFoundException {
+        LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
+        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+        Result result =  new MultiFormatReader().decode(binaryBitmap);
+
+        return result.getText();
     }
 }

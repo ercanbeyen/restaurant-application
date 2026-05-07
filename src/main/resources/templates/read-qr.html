@@ -11,7 +11,7 @@
         <div class="container pt-5">
             <h2>QR Code Reader</h2>
             <p>Please attach the QR code image.</p>
-            <form th:action="@{/qr/read}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/qr/read/image}" method="post" enctype="multipart/form-data">
                 <div>
                     <label for="fileInput"><b>Choose File:</b></label>
                     <input type="file" id="fileInput" name="file" />

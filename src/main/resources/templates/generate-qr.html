@@ -11,7 +11,7 @@
         <div class="container pt-5">
             <h2>QR Code Generator</h2>
             <p>Please add the text to be converted into a QR code.</p>
-            <form th:action="@{/qr/generate(text=${text})}" method="get">
+            <form th:action="@{/qr/generate/image(text=${text})}" method="get">
                 <label for="qrText"><b>Text:</b></label>
                 <input type="text" name="text" id="qrText" placeholder="Text" />
                 <br/>
