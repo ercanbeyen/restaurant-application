@@ -1,6 +1,7 @@
 package com.ercanbeyen.restaurantapplication.advice;
 
 import com.ercanbeyen.restaurantapplication.exception.AlreadyExistsException;
+import com.ercanbeyen.restaurantapplication.exception.BadRequestException;
 import com.ercanbeyen.restaurantapplication.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(BadRequestException.class)
+    public ModelAndView handleBadRequestException(Exception exception, HttpServletRequest request) {
+        return directToErrorPage(HttpStatus.BAD_REQUEST, exception, request.getRequestURL().toString());
+    }
+
+    @ExceptionHandler(SecurityException.class)
+    public ModelAndView handleSecurityException(Exception exception, HttpServletRequest request) {
+        return directToErrorPage(HttpStatus.FORBIDDEN, exception, request.getRequestURL().toString());
+    }
+
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFoundException(Exception exception, HttpServletRequest request) {
         return directToErrorPage(HttpStatus.NOT_FOUND, exception, request.getRequestURL().toString());
