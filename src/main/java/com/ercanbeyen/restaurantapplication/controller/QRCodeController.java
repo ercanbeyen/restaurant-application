@@ -56,4 +56,9 @@ public class QRCodeController {
     public String showReadQRCodePage() {
         return "read-qr";
     }
+
+    @GetMapping("/menu")
+    public String showMenuQRCodePage() {
+        return "menu-qr";
+    }
 }
