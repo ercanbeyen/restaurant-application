@@ -4,10 +4,12 @@ import com.ercanbeyen.restaurantapplication.constant.enums.ItemCategory;
 import com.ercanbeyen.restaurantapplication.dto.ItemDto;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -27,6 +29,9 @@ import java.util.List;
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ItemControllerIntegrationTest {
+    private static final String NOT_FOUND_MESSAGE = "not found";
+    private static final String ALREADY_EXISTS_MESSAGE = "already exists";
+
     @Resource
     private WebApplicationContext webApplicationContext;
     @Autowired
@@ -76,8 +81,11 @@ class ItemControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("error"));
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/error-details"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("statusCode", HttpStatus.CONFLICT.value()))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("requestUrl"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("message", Matchers.containsString(ALREADY_EXISTS_MESSAGE)));
     }
 
     @Test
@@ -99,8 +107,11 @@ class ItemControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/getItem/{id}", 25)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("error"));
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/error-details"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("statusCode", HttpStatus.NOT_FOUND.value()))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("requestUrl"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("message", Matchers.containsString(NOT_FOUND_MESSAGE)));
     }
 
     @Test
@@ -125,8 +136,11 @@ class ItemControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("error"));
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/error-details"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("statusCode", HttpStatus.CONFLICT.value()))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("requestUrl"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("message", Matchers.containsString(ALREADY_EXISTS_MESSAGE)));
     }
 
     @Test
@@ -157,8 +171,11 @@ class ItemControllerIntegrationTest {
     void givenId_whenDeleteItem_thenRedirectToErrorView() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/deleteItem/{id}", 25))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("error"));
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/error-details"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("statusCode", HttpStatus.NOT_FOUND.value()))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("requestUrl"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("message", Matchers.containsString(NOT_FOUND_MESSAGE)));
     }
 
     @Test
@@ -180,9 +197,11 @@ class ItemControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/getItemByName/{name}", "Unknown Test Item")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("item"))
-                .andExpect(MockMvcResultMatchers.view().name("error"));
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/error-details"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("statusCode", HttpStatus.NOT_FOUND.value()))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("requestUrl"))
+                .andExpect(MockMvcResultMatchers.flash().attribute("message", Matchers.containsString(NOT_FOUND_MESSAGE)));
     }
 
     @Test

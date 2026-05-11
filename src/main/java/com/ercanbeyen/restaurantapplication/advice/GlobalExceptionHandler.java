@@ -8,44 +8,44 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
-    public ModelAndView handleBadRequestException(Exception exception, HttpServletRequest request) {
-        return directToErrorPage(HttpStatus.BAD_REQUEST, exception, request.getRequestURL().toString());
+    public RedirectView handleBadRequestException(Exception exception, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return redirectToErrorPage(HttpStatus.BAD_REQUEST, exception, request.getRequestURL().toString(), redirectAttributes);
     }
 
     @ExceptionHandler(SecurityException.class)
-    public ModelAndView handleSecurityException(Exception exception, HttpServletRequest request) {
-        return directToErrorPage(HttpStatus.FORBIDDEN, exception, request.getRequestURL().toString());
+    public RedirectView handleSecurityException(Exception exception, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return redirectToErrorPage(HttpStatus.FORBIDDEN, exception, request.getRequestURL().toString(), redirectAttributes);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ModelAndView handleNotFoundException(Exception exception, HttpServletRequest request) {
-        return directToErrorPage(HttpStatus.NOT_FOUND, exception, request.getRequestURL().toString());
+    public RedirectView handleNotFoundException(Exception exception, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return redirectToErrorPage(HttpStatus.NOT_FOUND, exception, request.getRequestURL().toString(), redirectAttributes);
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ModelAndView handleConflictExceptions(Exception exception, HttpServletRequest request) {
-        return directToErrorPage(HttpStatus.CONFLICT, exception, request.getRequestURL().toString());
+    public RedirectView handleConflictException(Exception exception, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return redirectToErrorPage(HttpStatus.CONFLICT, exception, request.getRequestURL().toString(), redirectAttributes);
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleError(Exception exception, HttpServletRequest request) {
-        return directToErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, exception, request.getRequestURL().toString());
+    public RedirectView handleGeneralExceptions(Exception exception, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return redirectToErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, exception, request.getRequestURL().toString(), redirectAttributes);
     }
 
-    private ModelAndView directToErrorPage(HttpStatus httpStatus, Exception exception, String requestedUrl) {
-        log.error("Request: {} raised {}", requestedUrl, exception.toString());
+    private RedirectView redirectToErrorPage(HttpStatus status, Exception exception, String requestUrl, RedirectAttributes redirectAttributes) {
+        log.error("Request: {} raised {}", requestUrl, exception.toString());
 
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("statusCode", httpStatus.value());
-        modelAndView.addObject("message", exception.getMessage());
-        modelAndView.addObject("url", requestedUrl);
+        redirectAttributes.addFlashAttribute("statusCode", status.value());
+        redirectAttributes.addFlashAttribute("requestUrl", requestUrl);
+        redirectAttributes.addFlashAttribute("message", exception.getMessage());
 
-        return modelAndView;
+        return new RedirectView("/error-details");
     }
 }
