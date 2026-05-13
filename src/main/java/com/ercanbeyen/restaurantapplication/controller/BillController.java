@@ -2,19 +2,31 @@ package com.ercanbeyen.restaurantapplication.controller;
 
 import com.ercanbeyen.restaurantapplication.dto.BillDto;
 import com.ercanbeyen.restaurantapplication.dto.EmployeeDto;
+import com.ercanbeyen.restaurantapplication.dto.ItemDto;
+import com.ercanbeyen.restaurantapplication.exporter.PDFExporter;
 import com.ercanbeyen.restaurantapplication.model.Bill;
 import com.ercanbeyen.restaurantapplication.model.Order;
 import com.ercanbeyen.restaurantapplication.service.BillService;
 import com.ercanbeyen.restaurantapplication.service.EmployeeService;
+import com.ercanbeyen.restaurantapplication.service.ItemService;
+import com.itextpdf.text.DocumentException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +34,7 @@ import java.util.List;
 @RequestMapping("/bills")
 public class BillController {
     private final BillService billService;
+    private final ItemService itemService;
     private final EmployeeService employeeService;
 
     @GetMapping("/showOpenBillForm")
@@ -93,6 +106,30 @@ public class BillController {
         BillDto response = billService.updateBill(tableNumber, request);
 
         return callGetBill(response.tableNumber());
+    }
+
+    @GetMapping("/generateBill/tables/{tableNumber}")
+    public ResponseEntity<byte[]> generateBill(@PathVariable("tableNumber") Integer tableNumber) throws DocumentException, IOException {
+        BillDto bill = billService.getBill(tableNumber);
+        Map<String, Double> items = new HashMap<>();
+
+        for (Order order : bill.orders()) {
+            ItemDto itemDto = itemService.getItemByName(order.getItemName());
+            items.put(itemDto.name(), itemDto.price());
+        }
+
+        ByteArrayOutputStream byteArrayOutputStream = PDFExporter.generatePDFStreamOfBillPaper(bill, items);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentLength(byteArrayOutputStream.size());
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("table_" + tableNumber + "_bill.pdf")
+                .build());
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(byteArrayOutputStream.toByteArray());
     }
 
     @GetMapping("/closeBill/tables/{tableNumber}")
